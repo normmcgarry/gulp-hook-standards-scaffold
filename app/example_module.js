@@ -2,8 +2,8 @@
 
 function Greeter () {
     this.getGreeting = function (){
-        return "hello world";
-    }
+        return 'hello world';
+    };
 }
 
 module.exports.Greeter = Greeter;

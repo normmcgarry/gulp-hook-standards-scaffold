@@ -2,9 +2,9 @@
 
 /** the default config values for all environments */
 var defaultConfig = {
-    someValue: "test",
-    environment: "unknown",
-    trackingId: "12365534"
+    someValue: 'test',
+    environment: 'unknown',
+    trackingId: '12365534'
 };
 
 /**
@@ -16,18 +16,18 @@ var environments = [
         name: 'dev',
         matcher: function (context) {
             return context === undefined ||
-                   context.location.hostname === "localhost" ||
-                   context.location.hostname === "127.0.0.1";
+                   context.location.hostname === 'localhost' ||
+                   context.location.hostname === '127.0.0.1';
         },
         config: {
-            devOnlyProperty: "devstuff",
-            trackingId: "999999"
+            devOnlyProperty: 'devstuff',
+            trackingId: '999999'
         }
     },
     {
         name: 'qa',
         matcher: function (context) {
-            return context.location.hostname === "hookdevz.com";
+            return context.location.hostname === 'hookdevz.com';
         },
         config: {
 
@@ -36,7 +36,7 @@ var environments = [
     {
         name: 'production',
         matcher: function (context) {
-            return context.location.hostname === "google.com";
+            return context.location.hostname === 'google.com';
         },
         config: {
 
@@ -58,7 +58,7 @@ var wrapWithDefaults = function (obj, defaultObject) {
 };
 
 var getEnv = function(context) {
-    var result = undefined;
+    var result;
     for (var i=0; i < environments.length; i++) {
         var env = environments[i];
         if (env.matcher(context)) {
