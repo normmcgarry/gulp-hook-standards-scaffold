@@ -12,6 +12,11 @@
     "nib": "^1.0.3",
     "jshint-stylish": "^0.4.0",
     "gulp-mocha": "^1.0.0",
-    "gulp-jshint": "^1.8.4"
+    "gulp-jshint": "^1.8.4",
+    "mocha": "^1.21.4",
+    "chai": "^1.9.1"
+  },
+  "engines": {
+    "node": ">=0.10.0"
   }
 }
