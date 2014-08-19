@@ -1,0 +1,12 @@
+.idea
+.tmp
+.sass-cache
+dist
+tmp
+node_modules
+bower_components
+app/bower_components
+test/bower_components
+
+*.pyc
+
