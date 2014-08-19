@@ -14,10 +14,6 @@ gulp.task("clean", function() {
 		.pipe(clean());
 });
 
-gulp.task("build", ["tests"], function() {
-  return gulp.run("compile");
-});
-
-gulp.task("compile", ["scripts", "styles", "static"]);
-
+gulp.task("build", ["tests", "compile"];
+gulp.task("compile", ["tests", "scripts", "styles", "static"]);
 gulp.task("default", ["build"]);
