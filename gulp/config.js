@@ -13,7 +13,13 @@ var config = {
     dist: './dist/'
   },
   tests: {
-    src: ["./tests/**/*.js"]
+    src: ["./tests/**/*.js"],
+    mocha: {
+      config: {
+        ui: "tdd",
+        reporter:"spec"
+      }
+    }
   },
   lint: {
     src: ["./app/**/*.js"]
