@@ -22,7 +22,7 @@ var config = {
     }
   },
   lint: {
-    src: ["./app/**/*.js"]
+    src: ["./app/**/*.js", "./tests/**/*.js"]
   },
   scripts: {
 
