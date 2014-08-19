@@ -5,7 +5,7 @@ var config = {
     src: './dist/'
   },
   styles: {
-    src: ['./stlyes/**/*.styl'],
+    src: ['./styles/**/*.styl'],
     dist: './dist/css/'
   },
   static: {
