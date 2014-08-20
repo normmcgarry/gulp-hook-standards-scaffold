@@ -9,7 +9,7 @@ require('./gulp/scripts.js');
 require('./gulp/static.js');
 require('./gulp/tests.js');
 
-var config = require('./config.js');
+var config = require('./gulp/config.js');
 
 gulp.task("clean", function() {
 	return gulp.src(config.clean.src)
