@@ -79,8 +79,3 @@ var getEnv = function(context) {
 };
 
 module.exports = getEnv( (typeof window === 'undefined' ? undefined : window) ).config;
-
-
-
-
-
