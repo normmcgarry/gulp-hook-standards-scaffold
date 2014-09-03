@@ -12,7 +12,7 @@ var streamify = require('gulp-streamify')
 
 var config = require('./config.js');
 
-gulp.task("browserify", ["static"], function() {
+gulp.task("browserify", ["static", "clean"], function() {
   var b = browserify({
     cache: {},
     packageCache: {},
@@ -42,6 +42,5 @@ gulp.task("browserify", ["static"], function() {
 
   return task;
 });
-
 
 gulp.task("scripts", ["browserify"]);

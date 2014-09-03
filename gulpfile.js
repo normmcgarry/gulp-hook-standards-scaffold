@@ -14,11 +14,11 @@ var config = require('./gulp/config.js');
 
 gulp.task("clean", function() {
 	return gulp.src(config.clean.src, { read: false})
-		.pipe(clean());
+		.pipe(clean({force:true}));
 });
 
 gulp.task("build", ["tests", "compile"]);
-gulp.task("compile", ["tests", "scripts", "styles", "static"]);
+gulp.task("compile", ["scripts", "styles", "static"]);
 gulp.task("default", ["build"], function() {
 	if(args.watch) {
 		config.server.livereload = (config.server.livereload || args.livereload);
