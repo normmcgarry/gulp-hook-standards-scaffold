@@ -9,6 +9,7 @@ var source = require("vinyl-source-stream");
 var connect = require('gulp-connect');
 var uglify = require('gulp-uglify')
 var streamify = require('gulp-streamify')
+var gutil = require('gulp-util');
 
 var config = require('./config.js');
 
@@ -21,9 +22,15 @@ gulp.task("browserify", ["static", "clean"], function() {
   });
 
   if(args.watch) {
+
     b = watchify(b);
-    b.on('update', function() {
-      gutil.log(color.magenta(filepath), 'was', color.yellow(action))
+
+    b.on('update', function(ids) {
+
+      var changed = b._recorded;
+
+      gutil.log(gutil.colors.yellow(changed[0].file), 'was updated');
+
       var task = b.bundle()
         .pipe(source(config.scripts.output))
         .pipe(streamify(uglify()))
@@ -32,7 +39,8 @@ gulp.task("browserify", ["static", "clean"], function() {
       if(config.server.livereload || args.livereload) {
         task.pipe(connect.reload());
       }
-    })
+    });
+
   }
 
   var task = b.bundle()
