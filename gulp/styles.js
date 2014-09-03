@@ -5,17 +5,27 @@ var gulp = require("gulp");
 var stylus = require("gulp-stylus");
 var nib = require('nib');
 
-var config = require("./config.js");
+var connect = require('gulp-connect');
+var config = require('./config.js');
+var changed = require('gulp-changed');
 
 gulp.task("stylus", ["clean"], function() {
-  return gulp.src(config.styles.src)
-    .pipe(stylus({use: [nib()]}))
-    .pipe(gulp.dest(config.styles.dist))
+
+	var task = gulp.src(config.styles.src)
+		.pipe(changed(config.styles.dist))
+		.pipe(stylus({use: [nib()]}))
+		.pipe(gulp.dest(config.styles.dist));
+
+	if(config.server.livereload || args.livereload){
+		task.pipe(connect.reload());
+	}
+
+	return task;
+
 });
 
 gulp.task("styles", ["stylus"], function() {
-
-  if (args.watch)
-    gulp.watch(config.styles.src, [ 'stylus' ]);
-
+  	if (args.watch){
+		gulp.watch(config.styles.src, [ 'stylus' ])
+	}
 });

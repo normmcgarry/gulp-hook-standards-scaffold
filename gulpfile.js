@@ -21,7 +21,9 @@ gulp.task("build", ["tests", "compile"]);
 gulp.task("compile", ["scripts", "styles", "static"]);
 gulp.task("default", ["build"], function() {
 	if(args.watch) {
+
 		config.server.livereload = (config.server.livereload || args.livereload);
-	  connect.server(config.server);
+	  	connect.server(config.server);
+	  	
 	}
 });
