@@ -23,7 +23,11 @@ var config = require('./config.js');
 function buildJavascript(b) {
 
   var task = b.bundle()
-    .pipe(plumber())
+    .pipe(plumber({
+      errorHandler: function(error) {
+        gutil.log("Browserify error: " + error);
+      }
+    }))
     .pipe(source(config.scripts.output))
     .pipe(gutil.env.watch ? transform(function () { return exorcist(path.join(config.scripts.dist, config.scripts.output+".map")); }) : gutil.noop())
     .pipe(gutil.env.watch ? gutil.noop() : streamify(uglify()))
@@ -34,14 +38,15 @@ function buildJavascript(b) {
 
 function buildBower() {
   return gulp.src(bower({debug:true, paths:'.'}))
-    .pipe(gutil.env.watch ? concatsource("bower.js") : concat("bower.js"))
+    .pipe(gutil.env.watch ? concatsource("bower.js", {sourcesContent:true}) : concat("bower.js"))
     .pipe(gutil.env.watch ? gutil.noop() : streamify(uglify()))
     .pipe(gulp.dest(config.scripts.dist));
 }
 
 function buildVendor() {
   return gulp.src(config.scripts.vendor)
-    .pipe(concat("vendor.js"))
+    .pipe(gutil.env.watch ? concatsource("vendor.js", {sourcesContent:true}) : concat("vendor.js"))
+    .pipe(gutil.env.watch ? gutil.noop() : streamify(uglify()))
     .pipe(gulp.dest(config.scripts.dist));
 }
 
@@ -63,7 +68,7 @@ gulp.task("browserify", ["clean"], function() {
 
       var changed = b._recorded;
 
-      gutil.log(gutil.colors.yellow(changed[0].file), 'was updated');
+      gutil.log(gutil.colors.yellow(ids), 'was updated');
 
       var task = buildJavascript(b);
 
