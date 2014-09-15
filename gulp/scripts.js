@@ -37,7 +37,20 @@ function buildJavascript(b) {
 }
 
 function buildBower() {
-  return gulp.src(bower({debug:true, paths:'.'}))
+  try {
+    var mainBowerFiles = bower({debug: true, paths: '.'});
+  } catch (error) {
+    // bower_components folder does not exist, just print a warning and skip bower generation
+    gutil.log(gutil.colors.red(error.message));
+    return;
+  }
+
+  if (mainBowerFiles.length === 0) {
+    gutil.log(gutil.colors.red("No bower components found, skipping bower.js generation"));
+    return;
+  }
+
+  return gulp.src(mainBowerFiles)
     .pipe(gutil.env.watch ? concatsource("bower.js", {sourcesContent:true}) : concat("bower.js"))
     .pipe(gutil.env.watch ? gutil.noop() : streamify(uglify()))
     .pipe(gulp.dest(config.scripts.dist));
