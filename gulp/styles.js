@@ -9,7 +9,7 @@ var connect = require('gulp-connect');
 var config = require('./config.js');
 var changed = require('gulp-changed');
 
-gulp.task("stylus", ["clean"], function() {
+function getStylusStream() {
 
 	var task = gulp.src(config.styles.src)
 		.pipe(changed(config.styles.dist))
@@ -22,10 +22,24 @@ gulp.task("stylus", ["clean"], function() {
 
 	return task;
 
+}
+
+gulp.task("stylus", ["clean"], function() {
+
+	return getStylusStream();
+
 });
 
+gulp.task("stylus-watch", function() {
+
+	return getStylusStream();
+
+});
+
+
+
 gulp.task("styles", ["stylus"], function() {
-  	if (args.watch){
-		gulp.watch(config.styles.src, [ 'stylus' ])
+	if (args.watch){
+		gulp.watch(config.styles.src, [ 'stylus-watch' ])
 	}
 });

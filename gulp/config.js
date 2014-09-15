@@ -22,18 +22,20 @@ var config = {
     }
   },
   lint: {
-    src: ["./app/**/*.js", "./tests/**/*.js"]
+    src: ["./app/**/*.js", "!app/vendor/**/*.js", "./tests/**/*.js"]
   },
   scripts: {
     entry: "./app/index.js",
     output: "main.build.js",
-    dist: "./dist/js/"
+    dist: "./dist/js/",
+    vendor: "./app/vendor/**/*.js"
   },
   server: {
     root: "./dist/",
     port: 8080,
     livereload: false
-  }
+  },
+  bower: "./bower_components/"
 };
 
 module.exports = config;
