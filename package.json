@@ -37,14 +37,6 @@
     "node": ">=0.10.0"
   },
   "browserify-shim": {
-    "createjs": "global:createjs",
-    "signals": "global:signals",
-    "BitmapFont": "global:BitmapFont",
-    "BitmapTextField": "global:BitmapTextField",
-    "Assets":"global:lib",
-    "TweenMax": "global:TweenMax",
-    "TweenPlugin": "global:TweenPlugin",
-    "ThrowPropsPlugin": "global:ThrowPropsPlugin"
   },
   "browserify": {
     "transform": [

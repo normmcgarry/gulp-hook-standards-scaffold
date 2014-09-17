@@ -33,7 +33,7 @@ var config = {
   server: {
     root: "./dist/",
     port: 8080,
-    livereload: false
+    livereload: true
   },
   bower: "./bower_components/"
 };

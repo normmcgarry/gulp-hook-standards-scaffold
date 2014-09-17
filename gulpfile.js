@@ -5,6 +5,7 @@ var gulp = require('gulp');
 var clean = require('gulp-clean');
 var connect = require('gulp-connect');
 
+require('./gulp/images.js');
 require('./gulp/styles.js');
 require('./gulp/scripts.js');
 require('./gulp/static.js');
@@ -18,7 +19,7 @@ gulp.task("clean", function() {
 });
 
 gulp.task("build", ["tests", "compile"]);
-gulp.task("compile", ["tests", "clean", "scripts", "styles", "static"]);
+gulp.task("compile", ["tests", "clean", "scripts", "images", "styles", "static"]);
 gulp.task("default", ["build"], function() {
 	if(args.watch) {
 		config.server.livereload = (config.server.livereload || args.livereload);

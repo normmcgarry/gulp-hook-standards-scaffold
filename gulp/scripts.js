@@ -17,6 +17,7 @@ var exorcist = require("exorcist");
 var plumber = require("gulp-plumber");
 var bower = require('main-bower-files');
 var concatsource = require("gulp-concat-sourcemap");
+var watch = require("gulp-watch");
 
 var config = require('./config.js');
 
@@ -50,16 +51,28 @@ function buildBower() {
     return;
   }
 
+  gutil.log(gutil.colors.yellow("Building: " + mainBowerFiles.join("\n")));
+
   return gulp.src(mainBowerFiles)
+    .pipe(plumber({
+      errorHandler: function(error) {
+        gutil.log("Browserify error: " + error);
+      }
+    }))
     .pipe(gutil.env.watch ? concatsource("bower.js", {sourcesContent:true}) : concat("bower.js"))
-    .pipe(gutil.env.watch ? gutil.noop() : streamify(uglify()))
+    .pipe(gutil.env.watch ? gutil.noop() : uglify())
     .pipe(gulp.dest(config.scripts.dist));
 }
 
 function buildVendor() {
   return gulp.src(config.scripts.vendor)
+    .pipe(plumber({
+      errorHandler: function(error) {
+        gutil.log("Vendor error: " + error);
+      }
+    }))
     .pipe(gutil.env.watch ? concatsource("vendor.js", {sourcesContent:true}) : concat("vendor.js"))
-    .pipe(gutil.env.watch ? gutil.noop() : streamify(uglify()))
+    .pipe(gutil.env.watch ? gutil.noop() : uglify())
     .pipe(gulp.dest(config.scripts.dist));
 }
 
@@ -99,13 +112,25 @@ gulp.task("browserify", ["clean"], function() {
 
 gulp.task("vendor", ["clean"], function() {
   if(args.watch) {
-    gulp.watch(config.scripts.vendor, ["vendor-watch"]);
+    watch(config.scripts.vendor, function() {
+      console.log("Running vendor watch");
+      var task = buildVendor();
+      if(config.server.livereload || args.livereload) {
+        task.pipe(connect.reload());
+      }
+      return task;
+    });
   }
   return buildVendor();
 });
 
 gulp.task("vendor-watch", function() {
-  return buildVendor();
+  console.log("Running vendor watch");
+  var task = buildVendor();
+  if(config.server.livereload || args.livereload) {
+    task.pipe(connect.reload());
+  }
+  return task;
 });
 
 gulp.task("bower", ["clean"], function() {
@@ -116,7 +141,11 @@ gulp.task("bower", ["clean"], function() {
 });
 
 gulp.task("bower-watch", function() {
-  return buildBower();
+  var task = buildBower();
+  if(config.server.livereload || args.livereload) {
+    task.pipe(connect.reload());
+  }
+  return task;
 });
 
 gulp.task("scripts", ["browserify", "vendor", "bower"]);
