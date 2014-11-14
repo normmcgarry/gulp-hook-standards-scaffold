@@ -22,7 +22,7 @@ gulp.task('imagemin', ['static'], function () {
 
 });
 
-gulp.task('images', ['static', 'imagemin'], function() {
+gulp.task('images', ['imagemin'], function() {
 
 	if (args.watch) {
 		gulp.watch(config.images.src, ['imagemin']);

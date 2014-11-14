@@ -95,7 +95,7 @@ function buildVendor () {
 	return task;
 }
 
-gulp.task('browserify', function () {
+gulp.task('browserify', ['clean'], function () {
 
 	var b = browserify({
 		cache: {},
@@ -130,19 +130,19 @@ gulp.task('browserify', function () {
 
 });
 
-gulp.task('vendor', function() {
+gulp.task('vendor', ['clean'], function() {
 
 	return buildVendor();
 
 });
 
-gulp.task('bower', function () {
+gulp.task('bower', ['clean'], function () {
 
 	return buildBower();
 
 });
 
-gulp.task('scripts', ['clean', 'browserify', 'vendor', 'bower'], function () {
+gulp.task('scripts', ['browserify', 'vendor', 'bower'], function () {
 
 	if (args.watch) {
 		gulp.watch(config.scripts.vendor, ['vendor']);

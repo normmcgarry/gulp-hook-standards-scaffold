@@ -21,13 +21,13 @@ function copyStream () {
 
 }
 
-gulp.task('copy', function() {
+gulp.task('copy', ['clean'], function() {
 
 	return copyStream();
 
 });
 
-gulp.task('static', ['clean', 'copy'], function() {
+gulp.task('static', ['copy'], function() {
 
 	if (args.watch) {
 		gulp.watch(config.static.src, ['copy']);

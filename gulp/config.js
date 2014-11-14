@@ -10,7 +10,7 @@ var config = {
 	},
 
 	styles: {
-		src: ['./styles/**/*.styl'],
+		entry: './styles/index.styl',
 		dist: dest + '/css/'
 	},
 
