@@ -1,28 +1,14 @@
 'use strict';
 
-var args    = require('yargs').argv;
-var gulp = require('gulp');
-var clean = require('gulp-clean');
-var connect = require('gulp-connect');
+/**
+ * gulpfile.js
+ * ===========
+ * Rather than manage one giant configuration file responsible
+ * for creating multiple tasks, each task has been broken out into
+ * its own file in gulp/tasks. Any file in that folder gets automatically
+ * required by the loop in ./gulp/index.js (required below).
 
-require('./gulp/images.js');
-require('./gulp/styles.js');
-require('./gulp/scripts.js');
-require('./gulp/static.js');
-require('./gulp/tests.js');
+ * To add a new task, simply add a new task file to gulp/tasks.
+ */
 
-var config = require('./gulp/config.js');
-
-gulp.task("clean", function() {
-	return gulp.src(config.clean.src, { read: false})
-		.pipe(clean({force:true}));
-});
-
-gulp.task("build", ["tests", "compile"]);
-gulp.task("compile", ["tests", "clean", "scripts", "images", "styles", "static"]);
-gulp.task("default", ["build"], function() {
-	if(args.watch) {
-		config.server.livereload = (config.server.livereload || args.livereload);
-  	connect.server(config.server);
-	}
-});
+require('./gulp');

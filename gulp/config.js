@@ -1,41 +1,58 @@
 'use strict';
 
+var args = require('yargs').argv;
+var dest = args.watch ? './.tmp' : './dist';
+
 var config = {
-  clean: {
-    src: './dist/'
-  },
-  styles: {
-    src: ['./styles/**/*.styl'],
-    dist: './dist/css/'
-  },
-  static: {
-    src: ['./static/**/*'],
-    dist: './dist/'
-  },
-  tests: {
-    src: ["./tests/**/*.js"],
-    mocha: {
-      config: {
-        ui: "tdd",
-        reporter:"spec"
-      }
-    }
-  },
-  lint: {
-    src: ["./app/**/*.js", "!app/vendor/**/*.js", "./tests/**/*.js"]
-  },
-  scripts: {
-    entry: "./app/index.js",
-    output: "main.build.js",
-    dist: "./dist/js/",
-    vendor: "./app/vendor/**/*.js"
-  },
-  server: {
-    root: "./dist/",
-    port: 8080,
-    livereload: true
-  },
-  bower: "./bower_components/"
+
+	clean: {
+		src: ['./.tmp/', './dist/']
+	},
+
+	styles: {
+		entry: './styles/index.styl',
+		dist: dest + '/css/'
+	},
+
+	static: {
+		src: ['./static/**/*'],
+		dist: dest
+	},
+
+	images: {
+		src: ['./static/images/**/*.{gif,jpg,png,svg}'],
+		dist: dest + '/images/'
+	},
+
+	tests: {
+		src: ['./tests/**/*.js'],
+		mocha: {
+			config: {
+				ui: 'tdd',
+				reporter:'spec'
+			}
+		}
+	},
+
+	lint: {
+		src: ['./app/**/*.js', '!app/vendor/**/*.js', './tests/**/*.js']
+	},
+
+	scripts: {
+		entry: './app/index.js',
+		output: 'main.build.js',
+		dist: dest + '/js/',
+		vendor: './app/vendor/**/*.js'
+	},
+
+	server: {
+		root: dest,
+		port: 8080,
+		livereload: true
+	},
+
+	bower: './bower_components/'
+
 };
 
 module.exports = config;

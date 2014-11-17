@@ -1,11 +1,11 @@
 'use strict';
 
-var Greeter = function(greeting) {
-  this.greeting = greeting || "hello world";
-};
+function Greeter (greeting) {
+	this.greeting = greeting || 'Hello, world!';
+}
 
-Greeter.prototype.getGreeting = function() {
-  return this.greeting;
+Greeter.prototype.getGreeting = function () {
+	return this.greeting;
 };
 
 module.exports = Greeter;
