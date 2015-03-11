@@ -9,7 +9,7 @@ var concatsource = require('gulp-concat-sourcemap');
 var connect = require('gulp-connect');
 var plumber = require('gulp-plumber');
 var streamify = require('gulp-streamify');
-var uglify = require('gulp-uglify')
+var uglify = require('gulp-uglify');
 var gutil = require('gulp-util');
 
 var bower = require('main-bower-files');
