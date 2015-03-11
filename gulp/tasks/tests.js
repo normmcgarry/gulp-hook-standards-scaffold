@@ -8,14 +8,13 @@ var cache = require('gulp-cached');
 var jshint = require('gulp-jshint');
 var mocha = require('gulp-mocha');
 
-var jshintStylish = require('jshint-stylish');
-
 gulp.task('lint', function () {
 
 	return gulp.src(config.lint.src)
 		.pipe(cache('lint'))
 		.pipe(jshint('.jshintrc'))
-		.pipe(jshint.reporter(jshintStylish));
+		.pipe(jshint.reporter('jshint-stylish'))
+		.pipe(jshint.reporter('fail'));
 
 });
 
