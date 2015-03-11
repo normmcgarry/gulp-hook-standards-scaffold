@@ -1,6 +1,7 @@
 .idea
 .tmp
 .sass-cache
+.vagrant
 dist
 tmp
 node_modules
