@@ -18,5 +18,9 @@
     "trailing": true,
     "smarttabs": true,
     "jquery": false,
-    "predef": []
+    "predef": [
+      "suite",
+      "setup",
+      "test"
+    ]
 }
