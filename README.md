@@ -11,6 +11,11 @@ The Gulp command will compile, test, and build. There are two arguments availabl
 * `--livereload` will enable livereload; you can also enable livereload in the `./gulp/config.js` file
 
 
+# Structure
+
+Describe the file and folder setup.
+
+
 # Gulp
 
 This project uses the Gulp taskrunner to run a number of different tasks including file copying, moving, and deletion, 
@@ -77,26 +82,37 @@ command `gulp taskname`.
   Runs JSHint validation checks against JavaScript source files.
   
 * __mocha__ -  
-  Runs unit tests found in the `./tests` folder using the Mocha framework.
+  Runs unit tests found in the tests folder using the Mocha framework.
   
 * __clean__ *(build)* -    
   Empty out specified directories and delete specified files to prepare for other tasks.
   
 * __static__ *(copy)* -  
-  Calls sub-tasks to process files in the `./static` folder.
+  Calls sub-tasks to process files in the static folder.
   
 * __copy__ *(clean)*
-  Copies files from the `./static` folder to the distribution folder.
+  Copies files from the static folder to the distribution folder.
   
 * __scripts__ *(browserify, vendor, bower)* -  
   Calls sub-tasks for processing JavaScript source files.
   
-* __browserify__ *(clean)*
+* __browserify__ *(clean)* -  
+  Compiles app script in the distribution folder using Browserify.
 
-
-* __vendor__ *(clean)*
-* __bower__ *(clean)*
-* __styles__ *(stylus)*
-* __stylus__ *(clean)*
-* __images__ *(imagemin)*
-* __imagemin__ *(static)*
+* __vendor__ *(clean)* -  
+  Concatenates vendor scripts in the distribution folder.
+  
+* __bower__ *(clean)* -  
+  Concatenates Bower scripts in the distribution folder.
+  
+* __styles__ *(stylus)* -  
+  Calls sub-tasks for processing CSS source files.
+  
+* __stylus__ *(clean)* -  
+  Compiles app styles in the distribution folder using Stylus.
+  
+* __images__ *(imagemin)* -  
+  Calls sub-tasks for processing images.
+  
+* __imagemin__ *(static)* -  
+  Compresses source image files in the distribution folder.
