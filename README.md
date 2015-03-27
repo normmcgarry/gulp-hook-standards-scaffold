@@ -5,15 +5,27 @@ Copy these files into your project folder first. Then, from that folder, run:
     npm install
     gulp
      
+__If running on Windows, skip to the Vagrant section.__
+     
 The Gulp command will compile, test, and build. There are two arguments available for use:   
 
 * `--watch` will start a server
 * `--livereload` will enable livereload; you can also enable livereload in the `./gulp/config.js` file
 
 
-# Structure
+# Vagrant
 
-Describe the file and folder setup.
+This project contains a Vagrant configuration file and script to create a consistent development environment across 
+platforms, particularly on Windows. We found that many of the Node modules don't perform well on Windows, so please run 
+these instructions to get the virtual machine and project started:
+
+    vagrant up
+    npm install
+    gulp
+    
+To halt the virtual machine:
+
+    vagrant halt
 
 
 # Gulp
@@ -116,3 +128,8 @@ command `gulp taskname`.
   
 * __imagemin__ *(static)* -  
   Compresses source image files in the distribution folder.
+   
+
+# Structure
+
+Describe the file and folder setup.
