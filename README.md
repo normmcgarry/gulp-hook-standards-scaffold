@@ -1,6 +1,13 @@
 # Getting started
 
-Copy these files into your project folder first. Then, from that folder, run:
+There are a couple of applications you will need to install that will be used for every project: Node, Gulp, and 
+Vagrant (especially on Windows). Follow the directions at these links to install these applications:
+
+* [Node](https://nodejs.org/)
+* [Gulp](http://gulpjs.com/)
+* [Vagrant](https://www.vagrantup.com/)
+
+After getting those installed, copy these files into your project folder first. Then, from that folder, run:
 
     npm install
     gulp
