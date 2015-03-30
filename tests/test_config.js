@@ -3,9 +3,8 @@
 var config = require('../app/config');
 var assert = require('chai').assert;
 
-suite('config', function() {
+suite('config', function () {
     setup(function () {
-
     });
 
     test('default environment is dev', function () {
@@ -24,5 +23,3 @@ suite('config', function() {
         assert.strictEqual('999999', config.trackingId);
     });
 });
-
-

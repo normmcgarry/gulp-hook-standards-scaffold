@@ -6,6 +6,7 @@ var args = require('yargs').argv;
 var gulp = require('gulp');
 var cache = require('gulp-cached');
 var jshint = require('gulp-jshint');
+var jscs = require('gulp-jscs');
 var mocha = require('gulp-mocha');
 
 gulp.task('lint', function () {
@@ -18,6 +19,13 @@ gulp.task('lint', function () {
 
 });
 
+gulp.task('codestyle', function () {
+
+  return gulp.src(config.lint.src)
+    .pipe(jscs());
+
+});
+
 gulp.task('mocha', function () {
 
 	return gulp.src(config.tests.src)
@@ -25,7 +33,7 @@ gulp.task('mocha', function () {
 
 });
 
-gulp.task('tests', ['lint', 'mocha'], function() {
+gulp.task('tests', ['lint', 'codestyle', 'mocha'], function() {
 
 	if (args.watch) {
 		gulp.watch(config.lint.src, ['lint', 'mocha']);
