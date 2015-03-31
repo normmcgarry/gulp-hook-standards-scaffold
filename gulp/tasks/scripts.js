@@ -19,6 +19,7 @@ var path = require('path');
 var source = require('vinyl-source-stream');
 var transform = require('vinyl-transform');
 var watchify = require('watchify');
+var babelify = require("babelify");
 
 function buildJavascript (b) {
 
@@ -108,7 +109,7 @@ gulp.task('browserify', ['clean'], function () {
 
 	if (args.watch) {
 
-		b = watchify(b);
+		b = watchify(b).transform(babelify);
 
 		b.on('update', function (ids) {
 
