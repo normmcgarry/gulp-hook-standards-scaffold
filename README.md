@@ -94,11 +94,14 @@ command `gulp taskname`.
 * __build__ *(tests, clean, static, scripts, style, images)* -  
   Calls sub-tasks to build the project.
   
-* __tests__ *(lint, mocha)* -  
+* __tests__ *(lint, codestyle, mocha)* -  
   Runs unit tests and performs validation checks on JavaScript source files.
   
 * __lint__ -  
   Runs JSHint validation checks against JavaScript source files.
+  
+* __codestyle__ -  
+  Runs JSCS code style checks againt JavaScript source files.
   
 * __mocha__ -  
   Runs unit tests found in the tests folder using the Mocha framework.
