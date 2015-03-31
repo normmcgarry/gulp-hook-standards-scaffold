@@ -96,7 +96,6 @@
   "disallowMixedSpacesAndTabs": true,
   "disallowTrailingWhitespace": true,
   "validateIndentation": 4,
-  "validateLineBreaks": "LF",
 
   "requireSemicolons": true
 }
