@@ -23,7 +23,8 @@ var babelify = require("babelify");
 
 function buildJavascript (b) {
 
-	var task = b.bundle()
+	var task = b.transform(babelify)
+    .bundle()
 		.pipe(plumber({
 			errorHandler: function(error) {
 				gutil.log('Browserify error: ' + error);
@@ -109,7 +110,7 @@ gulp.task('browserify', ['clean'], function () {
 
 	if (args.watch) {
 
-		b = watchify(b).transform(babelify);
+		b = watchify(b);
 
 		b.on('update', function (ids) {
 
