@@ -28,6 +28,10 @@ gulp.task('codestyle', function () {
 
 gulp.task('mocha', function () {
 
+	/*
+	* TODO : Configure mocha to work with babel
+	*/
+
 	return gulp.src(config.tests.src)
 		.pipe(mocha(config.tests.mocha.config));
 
