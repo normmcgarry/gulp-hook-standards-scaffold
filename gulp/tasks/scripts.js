@@ -22,7 +22,8 @@ var watchify = require('watchify');
 
 function buildJavascript (b) {
 
-	var task = b.bundle()
+	var task = b.transform(babelify)
+    .bundle()
 		.pipe(plumber({
 			errorHandler: function(error) {
 				gutil.log('Browserify error: ' + error);

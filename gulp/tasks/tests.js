@@ -22,7 +22,9 @@ gulp.task('lint', function () {
 gulp.task('codestyle', function () {
 
   return gulp.src(config.lint.src)
-    .pipe(jscs());
+    .pipe(jscs({
+      esnext: true
+    }));
 
 });
 

@@ -1,11 +1,13 @@
 'use strict';
 
-function Greeter(greeting) {
+class Greeter {
+  constructor(greeting) {
     this.greeting = greeting || 'Hello, world!';
-}
+  }
 
-Greeter.prototype.getGreeting = function () {
+  getGreeting() {
     return this.greeting;
-};
+  }
+}
 
 module.exports = Greeter;
