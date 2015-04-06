@@ -24,11 +24,9 @@ function buildJavascript (b) {
 
 	var task = b
     .bundle()
-		.pipe(plumber({
-			errorHandler: function(error) {
-				gutil.log('Browserify error: ' + error);
-			}
-		}))
+    .on('error', function (error) {
+      gutil.log('Browserify error: ' + error);
+    })
 		.pipe(source(config.scripts.output))
 		.pipe(args.watch ? transform(function () {
 			return exorcist(path.join(config.scripts.dist, config.scripts.output + '.map'));
@@ -60,11 +58,9 @@ function buildBower() {
 	gutil.log(gutil.colors.yellow('Building: ' + mainBowerFiles.join('\n')));
 
 	var task = gulp.src(mainBowerFiles)
-		.pipe(plumber({
-			errorHandler: function(error) {
-				gutil.log('Browserify error: ' + error);
-			}
-		}))
+    .on('error', function (error) {
+      gutil.log('Bower error: ' + error);
+    })
 		.pipe(args.watch ? concatsource('bower.js', {sourcesContent: true}) : concat('bower.js'))
 		.pipe(args.watch ? gutil.noop() : uglify())
 		.pipe(gulp.dest(config.scripts.dist));
@@ -80,11 +76,9 @@ function buildBower() {
 function buildVendor () {
 
 	var task = gulp.src(config.scripts.vendor)
-		.pipe(plumber({
-			errorHandler: function(error) {
-				gutil.log('Vendor error: ' + error);
-			}
-		}))
+    .on('error', function (error) {
+      gutil.log('Vendor error: ' + error);
+    })
 		.pipe(args.watch ? concatsource('vendor.js', {sourcesContent: true}) : concat('vendor.js'))
 		.pipe(args.watch ? gutil.noop() : uglify())
 		.pipe(gulp.dest(config.scripts.dist));
