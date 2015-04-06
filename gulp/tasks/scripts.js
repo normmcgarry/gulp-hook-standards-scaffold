@@ -22,7 +22,7 @@ var watchify = require('watchify');
 
 function buildJavascript (b) {
 
-	var task = b.transform(babelify)
+	var task = b
     .bundle()
 		.pipe(plumber({
 			errorHandler: function(error) {
