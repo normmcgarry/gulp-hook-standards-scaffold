@@ -18,7 +18,10 @@ function buildStylus () {
 		.pipe(changed(config.styles.dist))
 		.pipe(stylus({
 			'use': [nib()],
-			'include css': true
+			'include css': true,
+			sourcemap: {
+				inline: true
+			}
 		}))
 		.pipe(args.watch ? gutil.noop() : csso())
 		.pipe(gulp.dest(config.styles.dist));
