@@ -19,10 +19,14 @@ var path = require('path');
 var source = require('vinyl-source-stream');
 var transform = require('vinyl-transform');
 var watchify = require('watchify');
+var hbsfy = require("hbsfy").configure({
+  extensions: ["html"]
+});
 
 function buildJavascript (b) {
 
 	var task = b
+	.transform(hbsfy)
     .bundle()
     .on('error', function (error) {
       gutil.log('Browserify error: ' + error);
