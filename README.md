@@ -143,3 +143,35 @@ command `gulp taskname`.
 # Structure
 
 Describe the file and folder setup.
+
+* __/app__ - Scripts go here. Vendor scripts go in the `vendor` sub-folder.
+
+* __/docs__ - Currently not in use.
+
+* __/gulp__ - Gulp configuration and tasks go here
+
+* __/static__ - HTML, images, fonts, audio, video, etc. Anything that will be served as-is.
+
+* __/styles__ - Stylesheets go here. Use Stylus. https://learnboost.github.io/stylus/
+
+* __/tests__ - Unit tests go here. Use Mocha. http://mochajs.org/
+
+* __.bowerrc__ - Bower configuration. http://bower.io/docs/config/
+
+* __.editorconfig__ - IDE configuration. http://editorconfig.org/
+
+* __.gitattributes__ - Git configuration. http://git-scm.com/docs/gitattributes
+
+* __.gitignore__ - Ignore these files in Git repo. http://git-scm.com/docs/gitignore
+
+* __.jscsrc__ - JavaScript Code Style configuration. http://jscs.info/overview.html
+
+* __bower.json__ - Bower packages. http://bower.io/docs/creating-packages/
+
+* __gulpfile.js__ - Gulp configuration. Loads scripts from `./gulp`
+
+* __package.json__ - NPM packages. https://docs.npmjs.com/files/package.json
+
+* __provision.sh__ - Set up script for Vagrant.
+
+* __Vagrantfile__ - Vagrant configuration. http://docs.vagrantup.com/v2/vagrantfile/
