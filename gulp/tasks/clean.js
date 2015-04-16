@@ -3,11 +3,12 @@
 var config = require('../config.js');
 
 var gulp = require('gulp');
-var clean = require('gulp-clean');
+var del = require('del');
+var gutil = require('gulp-util');
 
-gulp.task('clean', function () {
+gulp.task('clean', function (cb) {
 
-	return gulp.src(config.clean.src, {read: false})
-		.pipe(clean({force: true}));
+	del.sync(config.clean.src, {force: true});
+	cb();
 
 });

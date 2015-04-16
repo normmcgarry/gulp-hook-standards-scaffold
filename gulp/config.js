@@ -1,15 +1,29 @@
 'use strict';
 
 var args = require('yargs').argv;
-var dest = args.watch ? './.tmp' : './dist';
+
+var production = args.prod ? true : false;
+var build = args._.length ? args._[0] === 'build' : false;
+var watch = args._.length ? args._[0] === 'watch' : true;
+var req = build ? ['clean'] : [];
+var dest = watch ? './.tmp' : './dist';
 
 var config = {
 
+	build : build,
+
+	watch : watch,
+
+	req : req,
+
+	production : production,
+
 	clean: {
-		src: ['./.tmp/', './dist/']
+		src: ['./.tmp', './dist']
 	},
 
 	styles: {
+		watch: './styles/**/*',
 		entry: './styles/index.styl',
 		dist: dest + '/css/'
 	},
@@ -39,6 +53,7 @@ var config = {
 	},
 
 	scripts: {
+		watch: './app/**/*.js',
 		entry: './app/index.js',
 		output: 'main.build.js',
 		dist: dest + '/js/',
@@ -46,7 +61,7 @@ var config = {
 	},
 
 	server: {
-		root: dest,
+		root: './.tmp',
 		port: 8080,
 		livereload: true
 	},

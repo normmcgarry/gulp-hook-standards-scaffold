@@ -5,10 +5,10 @@ var config = require('../config.js');
 var args = require('yargs').argv;
 var gulp = require('gulp');
 var changed = require('gulp-changed');
-var connect = require('gulp-connect');
 var csso = require('gulp-csso');
 var stylus = require('gulp-stylus');
 var gutil = require('gulp-util');
+var sourcemaps = require('gulp-sourcemaps');
 
 var nib = require('nib');
 
@@ -23,18 +23,19 @@ function buildStylus () {
 				inline: true
 			}
 		}))
-		.pipe(args.watch ? gutil.noop() : csso())
+		.pipe(config.production ? csso() : gutil.noop())
 		.pipe(gulp.dest(config.styles.dist));
-
-	if (config.server.livereload || args.livereload) {
-		task.pipe(connect.reload());
-	}
 
 	return task;
 
 }
 
-gulp.task('stylus', ['clean'], function () {
+/*
+** config.req = build ? ['clean'] : [];
+** only run clean when building
+*/
+
+gulp.task('stylus', config.req, function () {
 
 	return buildStylus();
 
@@ -42,8 +43,5 @@ gulp.task('stylus', ['clean'], function () {
 
 gulp.task('styles', ['stylus'], function () {
 
-	if (args.watch) {
-		gulp.watch(config.styles.src, ['stylus'])
-	}
 
 });

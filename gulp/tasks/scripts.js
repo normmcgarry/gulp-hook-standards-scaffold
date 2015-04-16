@@ -7,38 +7,66 @@ var gulp = require('gulp');
 var concat = require('gulp-concat');
 var concatsource = require('gulp-concat-sourcemap');
 var connect = require('gulp-connect');
-var plumber = require('gulp-plumber');
+
 var streamify = require('gulp-streamify');
 var uglify = require('gulp-uglify');
 var gutil = require('gulp-util');
 
 var bower = require('main-bower-files');
 var browserify = require('browserify');
-var exorcist = require('exorcist');
+
+var sourcemaps = require('gulp-sourcemaps');
 var path = require('path');
 var source = require('vinyl-source-stream');
 var transform = require('vinyl-transform');
+var buffer = require('vinyl-buffer');
+
 var watchify = require('watchify');
+
 var hbsfy = require("hbsfy").configure({
   extensions: ["html"]
 });
 
+var gulpif = require('gulp-if');
+
 function buildJavascript (b) {
 
-	var task = b
-	.transform(hbsfy)
-    .bundle()
-    .on('error', function (error) {
-      gutil.log('Browserify error: ' + error);
-    })
-		.pipe(source(config.scripts.output))
-		.pipe(args.watch ? transform(function () {
-			return exorcist(path.join(config.scripts.dist, config.scripts.output + '.map'));
-		}) : gutil.noop())
-		.pipe(args.watch ? gutil.noop() : streamify(uglify()))
-		.pipe(gulp.dest(config.scripts.dist));
+	var bundler = browserify(config.scripts.entry, {
+		debug: !config.production,
+		cache: {}
+	});
 
-	return task;
+	if (config.watch) {
+		bundler = watchify(bundler);
+	}
+
+	var rebundle = function() {
+		return bundler.bundle()
+
+			.on('error', function (error) {
+				gutil.log('Browserify error: ' + error);
+			})
+
+			.pipe(source(config.scripts.output))
+
+			//watch or dev
+			.pipe(gulpif(config.watch, buffer()))
+			.pipe(gulpif(config.watch, sourcemaps.init({loadMaps: true})))
+				// Add transformation tasks to the pipeline here.
+				.pipe(uglify())
+				.on('error', gutil.log)
+			.pipe(gulpif(config.watch, sourcemaps.write('./')))
+
+			//prod
+			.pipe(gulpif(config.production, buffer()))
+			.pipe(gulpif(config.production, uglify()))
+
+			.pipe(gulp.dest(config.scripts.dist));
+		};
+
+	bundler.on('update', rebundle);
+
+	return rebundle();
 
 }
 
@@ -65,13 +93,13 @@ function buildBower() {
     .on('error', function (error) {
       gutil.log('Bower error: ' + error);
     })
-		.pipe(args.watch ? concatsource('bower.js', {sourcesContent: true}) : concat('bower.js'))
-		.pipe(args.watch ? gutil.noop() : uglify())
+		.pipe(config.production ? concatsource('bower.js', {sourcesContent: true}) : concat('bower.js'))
+		.pipe(config.production ? gutil.noop() : uglify())
 		.pipe(gulp.dest(config.scripts.dist));
 
-	if (config.server.livereload || args.livereload) {
-		task.pipe(connect.reload());
-	}
+	// if (config.server.livereload || args.livereload) {
+	// 	task.pipe(connect.reload());
+	// }
 
 	return task;
 
@@ -83,59 +111,35 @@ function buildVendor () {
     .on('error', function (error) {
       gutil.log('Vendor error: ' + error);
     })
-		.pipe(args.watch ? concatsource('vendor.js', {sourcesContent: true}) : concat('vendor.js'))
-		.pipe(args.watch ? gutil.noop() : uglify())
+		.pipe(config.production ? concatsource('vendor.js', {sourcesContent: true}) : concat('vendor.js'))
+		.pipe(config.production ? gutil.noop() : uglify())
 		.pipe(gulp.dest(config.scripts.dist));
 
-	if (config.server.livereload || args.livereload) {
-		task.pipe(connect.reload());
-	}
+	// if (config.server.livereload || args.livereload) {
+	// 	task.pipe(connect.reload());
+	// }
 
 	return task;
 }
 
-gulp.task('browserify', ['clean'], function () {
+/*
+** config.req = build ? ['clean'] : [];
+** only run clean when building
+*/
 
-	var b = browserify({
-		cache: {},
-		packageCache: {},
-		fullPaths: true,
-		debug: true
-	});
+gulp.task('browserify', config.req, function () {
 
-	b.add(config.scripts.entry);
-
-	if (args.watch) {
-
-		b = watchify(b);
-
-		b.on('update', function (ids) {
-
-			var changed = b._recorded;
-
-			gutil.log(gutil.colors.yellow(ids), 'was updated');
-
-			var task = buildJavascript(b);
-
-			if (config.server.livereload || args.livereload) {
-				task.pipe(connect.reload());
-			}
-
-		});
-
-	}
-
-	return buildJavascript(b);
+	return buildJavascript();
 
 });
 
-gulp.task('vendor', ['clean'], function() {
+gulp.task('vendor', config.req, function() {
 
 	return buildVendor();
 
 });
 
-gulp.task('bower', ['clean'], function () {
+gulp.task('bower', config.req, function () {
 
 	return buildBower();
 
@@ -143,10 +147,10 @@ gulp.task('bower', ['clean'], function () {
 
 gulp.task('scripts', ['browserify', 'vendor', 'bower'], function () {
 
-	if (args.watch) {
-		gulp.watch(config.scripts.vendor, ['vendor']);
-		gulp.watch(config.scripts.bower, ['bower']);
-	}
-
+	// if (args.watch) {
+	// 	gulp.watch(config.scripts.vendor, ['vendor']);
+	// 	gulp.watch(config.scripts.bower, ['bower']);
+	// 	gulp.watch(config.scripts.entry, ['browserify']);
+	// }
 
 });

@@ -9,23 +9,19 @@ var changed = require('gulp-changed');
 
 function buildImagemin () {
 
-	return gulp.src(config.images.src)
-		.pipe(changed(config.images.dist))
-		.pipe(imagemin())
-		.pipe(gulp.dest(config.images.dist));
+
 
 }
 
 gulp.task('imagemin', ['static'], function () {
 
-	return buildImagemin();
+	return gulp.src(config.images.src)
+		.pipe(changed(config.images.dist))
+		.pipe(imagemin())
+		.pipe(gulp.dest(config.images.dist));
 
 });
 
 gulp.task('images', ['imagemin'], function() {
-
-	if (args.watch) {
-		gulp.watch(config.images.src, ['imagemin']);
-	}
 
 });

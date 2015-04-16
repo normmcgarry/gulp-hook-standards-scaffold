@@ -13,24 +13,16 @@ function copyStream () {
 		.pipe(changed(config.static.dist))
 		.pipe(gulp.dest(config.static.dist));
 
-	if (config.server.livereload || args.livereload) {
-		task.pipe(connect.reload());
-	}
-
 	return task;
 
 }
 
-gulp.task('copy', ['clean'], function() {
+gulp.task('copy', config.req, function() {
 
 	return copyStream();
 
 });
 
 gulp.task('static', ['copy'], function() {
-
-	if (args.watch) {
-		gulp.watch(config.static.src, ['copy']);
-	}
 
 });
