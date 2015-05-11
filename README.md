@@ -10,6 +10,7 @@ Vagrant (especially on Windows). Follow the directions at these links to install
 After getting those installed, copy these files into your project folder first. Then, from that folder, run:
 
     npm install
+    npm install -g bower
     bower install
     gulp build
      
