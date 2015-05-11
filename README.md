@@ -10,15 +10,14 @@ Vagrant (especially on Windows). Follow the directions at these links to install
 After getting those installed, copy these files into your project folder first. Then, from that folder, run:
 
     npm install
-    gulp
+    bower install
+    gulp build
      
 __If running on Windows, skip to the Vagrant section.__
      
 The Gulp command will compile, test, and build. There are two arguments available for use:   
 
-* `--watch` will start a server
-* `--livereload` will enable livereload; you can also enable livereload in the `./gulp/config.js` file
-
+* `gulp watch` will start a server
 
 # Vagrant
 
