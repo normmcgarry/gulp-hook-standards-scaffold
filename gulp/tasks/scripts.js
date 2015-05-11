@@ -53,13 +53,13 @@ function buildJavascript (b) {
 			.pipe(gulpif(config.watch, buffer()))
 			.pipe(gulpif(config.watch, sourcemaps.init({loadMaps: true})))
 				// Add transformation tasks to the pipeline here.
-				.pipe(uglify())
+				.pipe(streamify(uglify()))
 				.on('error', gutil.log)
 			.pipe(gulpif(config.watch, sourcemaps.write('./')))
 
 			//prod
 			.pipe(gulpif(config.production, buffer()))
-			.pipe(gulpif(config.production, uglify()))
+			.pipe(gulpif(config.production, streamify(uglify())))
 
 			.pipe(gulp.dest(config.scripts.dist));
 		};
@@ -94,7 +94,7 @@ function buildBower() {
       gutil.log('Bower error: ' + error);
     })
 		.pipe(config.production ? concatsource('bower.js', {sourcesContent: true}) : concat('bower.js'))
-		.pipe(config.production ? gutil.noop() : uglify())
+		.pipe(config.production ? gutil.noop() : streamify(uglify()))
 		.pipe(gulp.dest(config.scripts.dist));
 
 	// if (config.server.livereload || args.livereload) {
@@ -112,7 +112,7 @@ function buildVendor () {
       gutil.log('Vendor error: ' + error);
     })
 		.pipe(config.production ? concatsource('vendor.js', {sourcesContent: true}) : concat('vendor.js'))
-		.pipe(config.production ? gutil.noop() : uglify())
+		.pipe(config.production ? gutil.noop() : streamify(uglify()))
 		.pipe(gulp.dest(config.scripts.dist));
 
 	// if (config.server.livereload || args.livereload) {
