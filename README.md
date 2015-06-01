@@ -1,38 +1,22 @@
 # Getting started
 
-There are a couple of applications you will need to install that will be used for every project: Node, Gulp, and 
-Vagrant (especially on Windows). Follow the directions at these links to install these applications:
+There are a couple of applications you will need to install that will be used for every project: Node & Gulp. Follow 
+the directions at these links to install these applications:
 
 * [Node](https://nodejs.org/)
 * [Gulp](http://gulpjs.com/)
-* [Vagrant](https://www.vagrantup.com/)
 
-After getting those installed, copy these files into your project folder first. Then, from that folder, run:
+After getting Node installed, copy these files into your project folder first. Then, from that folder, run:
 
     npm install
     npm install -g bower
+    npm install -g gulp
     bower install
     gulp build
-     
-__If running on Windows, skip to the Vagrant section.__
      
 The Gulp command will compile, test, and build. There are two arguments available for use:   
 
 * `gulp watch` will start a server
-
-# Vagrant
-
-This project contains a Vagrant configuration file and script to create a consistent development environment across 
-platforms, particularly on Windows. We found that many of the Node modules don't perform well on Windows, so please run 
-these instructions to get the virtual machine and project started:
-
-    vagrant up
-    npm install
-    gulp
-    
-To halt the virtual machine:
-
-    vagrant halt
 
 
 # Gulp
@@ -171,7 +155,3 @@ Describe the file and folder setup.
 * __gulpfile.js__ - Gulp configuration. Loads scripts from `./gulp`
 
 * __package.json__ - NPM packages. https://docs.npmjs.com/files/package.json
-
-* __provision.sh__ - Set up script for Vagrant.
-
-* __Vagrantfile__ - Vagrant configuration. http://docs.vagrantup.com/v2/vagrantfile/
