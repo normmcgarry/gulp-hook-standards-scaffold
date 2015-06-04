@@ -2,7 +2,6 @@
 
 var config = require('../config.js');
 
-var args = require('yargs').argv;
 var gulp = require('gulp');
 var cache = require('gulp-cached');
 var jshint = require('gulp-jshint');
@@ -33,11 +32,13 @@ gulp.task('mocha', function () {
 
 });
 
-gulp.task('tests', ['lint', 'codestyle', 'mocha'], function() {
+gulp.task('tests', ['lint', 'codestyle'], function() {
 
-	if (args.watch) {
-		gulp.watch(config.lint.src, ['lint', 'mocha']);
-		gulp.watch(config.tests.src, ['lint', 'mocha']);
+	if (config.watch) {
+
+		gulp.watch(config.lint.src, ['lint', 'codestyle']);
+		// gulp.watch(config.tests.src, ['mocha']);
+
 	}
 
 });

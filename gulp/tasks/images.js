@@ -1,27 +1,39 @@
 'use strict';
 
-var config = require('../config.js');
+var config = require('../config');
+var browser = require('../browser');
 
-var args = require('yargs').argv;
 var gulp = require('gulp');
-var imagemin = require('gulp-imagemin');
+var gutil = require('gulp-util');
 var changed = require('gulp-changed');
+var imagemin = require('gulp-imagemin');
 
-function buildImagemin () {
-
-
-
-}
-
-gulp.task('imagemin', ['static'], function () {
+gulp.task('do-images', [], function () {
 
 	return gulp.src(config.images.src)
 		.pipe(changed(config.images.dist))
 		.pipe(imagemin())
-		.pipe(gulp.dest(config.images.dist));
+		.pipe(gulp.dest(config.images.dist))
+    .pipe(browser.reload({stream: true}));
 
 });
 
-gulp.task('images', ['imagemin'], function() {
+
+// watch tasks
+
+gulp.task('reload-images', ['do-images'], function () {
+
+  gutil.log(gutil.colors.yellow('Reloading images...'));
+
+});
+
+
+// main task
+
+gulp.task('images', ['do-images'], function() {
+
+  if (config.watch) {
+    gulp.watch(config.images.src, ['reload-images']);
+  }
 
 });

@@ -3,8 +3,10 @@
 var args = require('yargs').argv;
 
 var production = args.prod ? true : false;
+
 var build = args._.length ? args._[0] === 'build' : false;
 var watch = args._.length ? args._[0] === 'watch' : true;
+
 var req = build ? ['clean'] : [];
 var dest = watch ? './.tmp' : './dist';
 
@@ -22,14 +24,22 @@ var config = {
 		src: ['./.tmp', './dist']
 	},
 
+  env: {
+    dev: './env/dev.json',
+    prod: './env/prod.json',
+
+    dist: './app/config',
+    name: 'env.json'
+  },
+
 	styles: {
-		watch: './styles/**/*',
+		watch: ['./styles/**/*', './app/**/*.{css,styl}'],
 		entry: './styles/index.styl',
 		dist: dest + '/css/'
 	},
 
 	static: {
-		src: ['./static/**/*'],
+		src: ['./static/**/*', '!./static/images/**/*.{gif,jpg,png,svg}'],
 		dist: dest
 	},
 
@@ -53,17 +63,17 @@ var config = {
 	},
 
 	scripts: {
-		watch: './app/**/*.js',
 		entry: './app/index.js',
 		output: 'main.build.js',
 		dist: dest + '/js/',
-		vendor: './app/vendor/**/*.js'
+
+		vendor: ['./app/vendor/jquery.js', './app/vendor/**/*.js'],
+    bower: './bower_components/**/*.js',
+    app: ['./app/**/*.{js,html}', '!./app/vendor/**/*']
 	},
 
 	server: {
-		root: './.tmp',
-		port: 8080,
-		livereload: true
+		root: dest
 	},
 
 	bower: './bower_components/'

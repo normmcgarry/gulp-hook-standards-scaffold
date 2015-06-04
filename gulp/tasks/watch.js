@@ -1,22 +1,24 @@
 'use strict';
 
-var config = require('../config.js');
+var config = require('../config');
+var browser = require('../browser');
 
 var gulp = require('gulp');
 var gutil = require('gulp-util');
 
-gulp.task('watch', ['tests', 'static', 'scripts', 'styles', 'images', 'browser-sync'], function() {
+gulp.task('watch', ['tests', 'static', 'scripts', 'styles', 'images'], function() {
 
-	//styles
-	gulp.watch(config.styles.watch, ['reload-styles']);
+  browser.init({
+        server: {
+            baseDir: config.server.root
+        },
+        ghostMode: {
+          clicks: false,
+          forms: false,
+          scroll: false
+        }
+    });
 
-	//static
-	gulp.watch(config.static.src, ['reload-static']);
-
-	//scripts
-	gulp.watch(config.scripts.watch, ['reload-js']);
-
-	//notification
-	gutil.log(gutil.colors.bgGreen('Watching for changes... butts'));
+	gutil.log(gutil.colors.bgGreen('Watching for changes...'));
 
 });

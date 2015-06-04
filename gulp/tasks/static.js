@@ -1,28 +1,37 @@
 'use strict';
 
-var config = require('../config.js');
+var config = require('../config');
+var browser = require('../browser');
 
-var args = require('yargs').argv;
 var gulp = require('gulp');
-var connect = require('gulp-connect');
+var gutil = require('gulp-util');
 var changed = require('gulp-changed');
 
-function copyStream () {
+gulp.task('do-static', config.req, function() {
 
-	var task = gulp.src(config.static.src)
-		.pipe(changed(config.static.dist))
-		.pipe(gulp.dest(config.static.dist));
-
-	return task;
-
-}
-
-gulp.task('copy', config.req, function() {
-
-	return copyStream();
+  return gulp.src(config.static.src)
+    .pipe(changed(config.static.dist))
+    .pipe(gulp.dest(config.static.dist))
+    .pipe(browser.reload({stream: true}));
 
 });
 
-gulp.task('static', ['copy'], function() {
+
+// watch tasks
+
+gulp.task('reload-static', ['do-static'], function () {
+
+  gutil.log(gutil.colors.yellow('Reloading static...'));
+
+});
+
+
+// main task
+
+gulp.task('static', ['do-static'], function() {
+
+  if (config.watch) {
+    gulp.watch(config.static.src, ['reload-static']);
+  }
 
 });
