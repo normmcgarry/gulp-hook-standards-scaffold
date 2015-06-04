@@ -8,7 +8,7 @@ var gutil = require('gulp-util');
 var changed = require('gulp-changed');
 var imagemin = require('gulp-imagemin');
 
-gulp.task('do-images', [], function () {
+gulp.task('do-images', gulp.parallel(function () {
 
 	return gulp.src(config.images.src)
 		.pipe(changed(config.images.dist))
@@ -16,24 +16,24 @@ gulp.task('do-images', [], function () {
 		.pipe(gulp.dest(config.images.dist))
     .pipe(browser.reload({stream: true}));
 
-});
+}));
 
 
 // watch tasks
 
-gulp.task('reload-images', ['do-images'], function () {
+gulp.task('reload-images', gulp.parallel('do-images', function () {
 
   gutil.log(gutil.colors.yellow('Reloading images...'));
 
-});
+}));
 
 
 // main task
 
-gulp.task('images', ['do-images'], function() {
+gulp.task('images', gulp.parallel('do-images', function() {
 
   if (config.watch) {
-    gulp.watch(config.images.src, ['reload-images']);
+    gulp.watch(config.images.src, gulp.series('reload-images'));
   }
 
-});
+}));

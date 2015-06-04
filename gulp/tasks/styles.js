@@ -15,7 +15,7 @@ var nib = require('nib');
 ** only run clean when building
 */
 
-gulp.task('do-styles', config.req, function () {
+gulp.task('do-styles', gulp.parallel(function () {
 
   return gulp.src(config.styles.entry)
     .pipe(changed(config.styles.dist))
@@ -36,24 +36,24 @@ gulp.task('do-styles', config.req, function () {
     .pipe(gulp.dest(config.styles.dist))
     .pipe(browser.reload({stream: true}));
 
-});
+}));
 
 
 // watch tasks
 
-gulp.task('reload-styles', ['do-styles'], function () {
+gulp.task('reload-styles', gulp.parallel('do-styles', function () {
 
   gutil.log(gutil.colors.yellow('Reloading styles...'));
 
-});
+}));
 
 
 // main task
 
-gulp.task('styles', ['do-styles'], function () {
+gulp.task('styles', gulp.parallel('do-styles', function () {
 
   if (config.watch) {
-    gulp.watch(config.styles.watch, ['reload-styles']);
+    gulp.watch(config.styles.watch, gulp.series('reload-styles'));
   }
 
-});
+}));

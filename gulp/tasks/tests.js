@@ -32,13 +32,13 @@ gulp.task('mocha', function () {
 
 });
 
-gulp.task('tests', ['lint', 'codestyle'], function() {
+gulp.task('tests', gulp.parallel('lint', 'codestyle', function() {
 
 	if (config.watch) {
 
-		gulp.watch(config.lint.src, ['lint', 'codestyle']);
+		gulp.watch(config.lint.src, gulp.parallel('lint', 'codestyle'));
 		// gulp.watch(config.tests.src, ['mocha']);
 
 	}
 
-});
+}));

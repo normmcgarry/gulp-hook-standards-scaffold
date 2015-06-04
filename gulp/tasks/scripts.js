@@ -31,7 +31,7 @@ var hbsfy = require("hbsfy").configure({
 ** only run clean when building
 */
 
-gulp.task('do-app', ['env'].concat(config.req), function () {
+gulp.task('do-app', gulp.parallel('env'/*.concat(config.req),*/, function () {
 
   var bundler = browserify(config.scripts.entry, {
     debug: !config.production,
@@ -62,9 +62,9 @@ gulp.task('do-app', ['env'].concat(config.req), function () {
 
   return rebundle();
 
-});
+}));
 
-gulp.task('do-bower', config.req, function () {
+gulp.task('do-bower', gulp.parallel(function () {
 
   var mainBowerFiles;
 
@@ -92,9 +92,9 @@ gulp.task('do-bower', config.req, function () {
     .pipe(gulp.dest(config.scripts.dist))
     .pipe(browser.reload({stream: true}));
 
-});
+}));
 
-gulp.task('do-vendor', config.req, function() {
+gulp.task('do-vendor', gulp.parallel(function() {
 
   return gulp.src(config.scripts.vendor)
     .on('error', function (error) {
@@ -105,38 +105,38 @@ gulp.task('do-vendor', config.req, function() {
     .pipe(gulp.dest(config.scripts.dist))
     .pipe(browser.reload({stream: true}));
 
-});
+}));
 
 
 // watch tasks
 
-gulp.task('reload-app', ['do-app'], function () {
+gulp.task('reload-app', gulp.parallel('do-app', function () {
 
   gutil.log(gutil.colors.yellow('Reloading app...'));
 
-});
+}));
 
-gulp.task('reload-bower', ['do-bower'], function () {
+gulp.task('reload-bower', gulp.parallel('do-bower', function () {
 
   gutil.log(gutil.colors.yellow('Reloading bower...'));
 
-});
+}));
 
-gulp.task('reload-vendor', ['do-vendor'], function () {
+gulp.task('reload-vendor', gulp.parallel('do-vendor', function () {
 
   gutil.log(gutil.colors.yellow('Reloading vendor...'));
 
-});
+}));
 
 
 // main task
 
-gulp.task('scripts', ['do-app', 'do-bower', 'do-vendor'], function () {
+gulp.task('scripts', gulp.parallel('do-app', 'do-bower', 'do-vendor', function () {
 
   if (config.watch) {
-    gulp.watch(config.scripts.app, ['reload-app']);
-    gulp.watch(config.scripts.bower, ['reload-bower']);
-    gulp.watch(config.scripts.vendor, ['reload-vendor']);
+    gulp.watch(config.scripts.app, gulp.series('reload-app'));
+    gulp.watch(config.scripts.bower, gulp.series('reload-bower'));
+    gulp.watch(config.scripts.vendor, gulp.series('reload-vendor'));
   }
 
-});
+}));
