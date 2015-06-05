@@ -24,8 +24,8 @@ gulp.task('build', ['tests', 'clean', 'static', 'scripts', 'styles', 'images'], 
 
     //inject the date and version into a new CSS file
     gulp.src(config.styles.dist + 'index.css')
-      .pipe(inject.prepend('<!-- Created: ' + date + ' -->\n'))
-      .pipe(inject.prepend('<!-- Version: ' + version + ' -->\n'))
+      .pipe(inject.prepend('/* Created: ' + date + '*/\n'))
+      .pipe(inject.prepend('/* Version: ' + version + '*/\n'))
       .pipe(rename('index.' + version + '.css'))
       .pipe(gulp.dest(config.styles.dist));
 
