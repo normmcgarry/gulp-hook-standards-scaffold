@@ -3,42 +3,34 @@
 var config = require('../config.js');
 
 var gulp = require('gulp');
-var cache = require('gulp-cached');
+// var cache = require('gulp-cached'); --> Deprecated by gulp.lastRun
 var jshint = require('gulp-jshint');
 var jscs = require('gulp-jscs');
 var mocha = require('gulp-mocha');
 
-gulp.task('lint', function () {
+gulp.task('lint', lint);
+gulp.task('codestyle', codestyle);
+gulp.task('mocha', tests);
+gulp.task('tests', gulp.series('lint', 'codestyle', watch));
 
-	return gulp.src(config.lint.src)
-		.pipe(cache('lint'))
-		.pipe(jshint('.jshintrc'))
-		.pipe(jshint.reporter('jshint-stylish'))
-});
+function lint(){
+    return gulp.src(config.lint.src, {since: gulp.lastRun('lint')})
+      //		.pipe(cache('lint')) --> deprecated by gulp.lastRun
+      .pipe(jshint('.jshintrc'))
+      .pipe(jshint.reporter('jshint-stylish'))
+}
 
-gulp.task('codestyle', function () {
-
+function codestyle(){
   return gulp.src(config.lint.src)
-    .pipe(jscs({
-      esnext: true
-    }));
+    .pipe(jscs({esnext: true}));
+}
 
-});
+function tests(){
+  return gulp.src(config.tests.src).pipe(mocha(config.tests.mocha.config));
+}
 
-gulp.task('mocha', function () {
-
-	return gulp.src(config.tests.src)
-		.pipe(mocha(config.tests.mocha.config));
-
-});
-
-gulp.task('tests', gulp.parallel('lint', 'codestyle', function() {
-
-	if (config.watch) {
-
-		gulp.watch(config.lint.src, gulp.parallel('lint', 'codestyle'));
-		// gulp.watch(config.tests.src, ['mocha']);
-
-	}
-
-}));
+function watch(){
+  if (config.watch) {
+    gulp.watch(config.lint.src, gulp.parallel('lint', 'codestyle'));
+  }
+}
