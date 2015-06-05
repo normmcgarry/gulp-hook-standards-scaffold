@@ -5,7 +5,7 @@ var browser = require('../browser');
 
 var gulp = require('gulp');
 var gutil = require('gulp-util');
-var changed = require('gulp-changed');
+//var changed = require('gulp-changed'); --> deprecated by gulp.lastRun
 var csso = require('gulp-csso');
 var stylus = require('gulp-stylus');
 var nib = require('nib');
@@ -15,10 +15,9 @@ var nib = require('nib');
 ** only run clean when building
 */
 
-gulp.task('do-styles', gulp.parallel(function () {
-
-  return gulp.src(config.styles.entry)
-    .pipe(changed(config.styles.dist))
+function styles(){
+  return gulp.src(config.styles.entry, {since: gulp.lastRun('styles')})
+    //.pipe(changed(config.styles.dist))
 
     .pipe(stylus({
       'use': [nib()],
@@ -35,25 +34,16 @@ gulp.task('do-styles', gulp.parallel(function () {
     .pipe(config.production ? csso() : gutil.noop())
     .pipe(gulp.dest(config.styles.dist))
     .pipe(browser.reload({stream: true}));
+}
 
-}));
-
-
-// watch tasks
-
-gulp.task('reload-styles', gulp.parallel('do-styles', function () {
-
+function log(){
   gutil.log(gutil.colors.yellow('Reloading styles...'));
+}
 
-}));
-
-
-// main task
-
-gulp.task('styles', gulp.parallel('do-styles', function () {
-
+function watch(){
   if (config.watch) {
-    gulp.watch(config.styles.watch, gulp.series('reload-styles'));
+    gulp.watch(config.styles.watch, gulp.series(log, styles));
   }
-
-}));
+}
+// main task
+gulp.task('styles', styles);
