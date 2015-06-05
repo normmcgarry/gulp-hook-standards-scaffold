@@ -44,7 +44,7 @@ gulp.task('version', function() {
     .pipe(inject.append('<!-- Version: ' + version + ' -->\n'))
     .pipe(inject.append('<!-- Created: ' + date + ' -->'))
     .pipe(replace('index.css', 'index.' + version + '.css'))
-    .pipe(replace('<html ', '<html data-version="'+ version +'" '))
+    .pipe(replace('<html', '<html data-version="'+ version +'"'))
     .pipe(replace(config.scripts.output, 'main.build.' + version + '.js'))
     .pipe(gulp.dest(config.static.dist));
 
