@@ -11,7 +11,6 @@ var stripDebug = require('gulp-strip-debug');
 
 var streamify = require('gulp-streamify');
 var uglify = require('gulp-uglify');
-var gutil = require('gulp-util');
 
 var bower = require('main-bower-files');
 var browserify = require('browserify');
@@ -20,25 +19,13 @@ var sourcemaps = require('gulp-sourcemaps');
 var source = require('vinyl-source-stream');
 var buffer = require('vinyl-buffer');
 
-var watchify = require('watchify');
-
-var hbsfy = require("hbsfy").configure({
-  extensions: ["html"]
-});
-
-/*
-** config.req = build ? ['clean'] : [];
-** only run clean when building
-*/
-
-gulp.task('do-app', gulp.parallel('env'/*.concat(config.req),*/, function () {
-
+function app(){
   var bundler = browserify(config.scripts.entry, {
     debug: !config.production,
     cache: {}
   });
 
-  var rebundle = function() {
+  function rebundle() {
     return bundler.bundle()
 
       .on('error', function (error) {
@@ -61,41 +48,9 @@ gulp.task('do-app', gulp.parallel('env'/*.concat(config.req),*/, function () {
   bundler.on('update', rebundle);
 
   return rebundle();
+}
 
-}));
-
-gulp.task('do-bower', gulp.parallel(function () {
-
-  var mainBowerFiles;
-
-  try {
-    mainBowerFiles = bower({debug: true, paths: '.'});
-  } catch (error) {
-    // bower_components folder does not exist, just print a warning and skip bower generation
-    gutil.log(gutil.colors.red(error.message));
-    return;
-  }
-
-  if (mainBowerFiles.length === 0) {
-    gutil.log(gutil.colors.red('No bower components found, skipping bower.js generation'));
-    return;
-  }
-
-  gutil.log(gutil.colors.yellow('Building: ' + mainBowerFiles.join('\n')));
-
-  return gulp.src(mainBowerFiles)
-    .on('error', function (error) {
-      gutil.log('Bower error: ' + error);
-    })
-    .pipe(config.production ? concat('bower.js') : concatsource('bower.js', {sourcesContent: true}))
-    .pipe(config.production ? streamify(uglify()) : gutil.noop())
-    .pipe(gulp.dest(config.scripts.dist))
-    .pipe(browser.reload({stream: true}));
-
-}));
-
-gulp.task('do-vendor', gulp.parallel(function() {
-
+function vendor(){
   return gulp.src(config.scripts.vendor)
     .on('error', function (error) {
       gutil.log('Vendor error: ' + error);
@@ -104,39 +59,66 @@ gulp.task('do-vendor', gulp.parallel(function() {
     .pipe(config.production ? streamify(uglify()) : gutil.noop())
     .pipe(gulp.dest(config.scripts.dist))
     .pipe(browser.reload({stream: true}));
+}
 
-}));
+function watch(){
+  if (config.watch) {
+    gulp.watch(config.scripts.app, gulp.series(logApp, 'app'));
+    gulp.watch(config.scripts.bower, gulp.series(logBower, 'bower'));
+    gulp.watch(config.scripts.vendor, gulp.series(logVendor, 'vendor'));
+  }
+}
 
+function bowerComponents(){
+    var mainBowerFiles;
 
-// watch tasks
+    try {
+      mainBowerFiles = bower({debug: true, paths: '.'});
+    } catch (error) {
+      // bower_components folder does not exist, just print a warning and skip bower generation
+      gutil.log(gutil.colors.red(error.message));
+      return;
+    }
 
-gulp.task('reload-app', gulp.parallel('do-app', function () {
+    if (mainBowerFiles.length === 0) {
+      gutil.log(gutil.colors.red('No bower components found, skipping bower.js generation'));
+      return;
+    }
 
+    gutil.log(gutil.colors.yellow('Building: ' + mainBowerFiles.join('\n')));
+
+    return gulp.src(mainBowerFiles)
+      .on('error', function (error) {
+        gutil.log('Bower error: ' + error);
+      })
+      .pipe(config.production ? concat('bower.js') : concatsource('bower.js', {sourcesContent: true}))
+      .pipe(config.production ? streamify(uglify()) : gutil.noop())
+      .pipe(gulp.dest(config.scripts.dist))
+      .pipe(browser.reload({stream: true}));
+}
+
+function logApp(){
   gutil.log(gutil.colors.yellow('Reloading app...'));
 
-}));
+}
 
-gulp.task('reload-bower', gulp.parallel('do-bower', function () {
-
+function logBower(){
   gutil.log(gutil.colors.yellow('Reloading bower...'));
+}
 
-}));
-
-gulp.task('reload-vendor', gulp.parallel('do-vendor', function () {
-
+function logVendor() {
   gutil.log(gutil.colors.yellow('Reloading vendor...'));
+}
 
-}));
 
+/*
+** config.req = build ? ['clean'] : [];
+** only run clean when building
+*/
+
+gulp.task('app', gulp.parallel('env', 'clean', app));
+gulp.task('bower', bowerComponents);
+gulp.task('vendor', vendor);
 
 // main task
-
-gulp.task('scripts', gulp.parallel('do-app', 'do-bower', 'do-vendor', function () {
-
-  if (config.watch) {
-    gulp.watch(config.scripts.app, gulp.series('reload-app'));
-    gulp.watch(config.scripts.bower, gulp.series('reload-bower'));
-    gulp.watch(config.scripts.vendor, gulp.series('reload-vendor'));
-  }
-
-}));
+gulp.task('scripts', gulp.parallel('app', 'bower', 'vendor', watch));
