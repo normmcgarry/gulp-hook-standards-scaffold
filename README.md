@@ -78,16 +78,16 @@ command `gulp taskname`.
 * __build__ *(tests, clean, static, scripts, style, images)* - 
   Calls sub-tasks to build the project.
   
-  If the `--version` flag is used, a version number from new Date().getTime() is added to the JS and CSS file names. main.build.js would be `main.build.1433375041078.js` and `index.css` would be `index.1433375041078.css`. index.html would have the following comments at the bottom of the file while the CSS and JS files will have this included at the top.
+* __version__ -
+
+    If no `--version=STRING-OR-NUMBER-HERE` arguments are used, a version number from new Date().getTime() is added to the JS and CSS file names. main.build.js would be `main.build.1433375041078.js` and `index.css` would be `index.1433375041078.css`. index.html would have the following comments at the bottom of the file while the CSS and JS files will have this included at the top.
          
    
-   `<!-- Version: 1433375041078 -->`
+   `Version: 1433375041078`
    
-   `<!-- Created: Wed Jun 03 2015 16:44:01 GMT-0700 (Pacific Daylight Time) -->`
+   `Created: Wed Jun 03 2015 16:44:01 GMT-0700 (Pacific Daylight Time)`
 
-  To use your own version number use `--version STRING-OR-NUMBER-HERE`
-  
-  
+  To use your own version number use `--version=STRING-OR-NUMBER-HERE`
   
 * __tests__ *(lint, codestyle, mocha)* -  
   Runs unit tests and performs validation checks on JavaScript source files.
