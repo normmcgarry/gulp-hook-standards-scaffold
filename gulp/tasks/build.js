@@ -2,6 +2,8 @@
 
 var gulp = require('gulp');
 
-gulp.task('build', function(){
+gulp.task('build', build);
 
-});/*gulp.parallel('tests', 'clean', 'static', 'scripts', 'styles', 'images'));*/
+function build(){
+  gulp.parallel('tests', 'clean', 'static', 'scripts', 'styles', 'images');
+}
