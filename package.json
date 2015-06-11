@@ -1,7 +1,9 @@
 {
   "name": "hook-gulp",
   "version": "0.0.0",
-  "dependencies": {},
+  "dependencies": {
+    "gulp-cli": "git://github.com/gulpjs/gulp-cli#4.0"
+  },
   "devDependencies": {
     "browser-sync": "^2.6.4",
     "browserify": "^5.10.0",
@@ -10,7 +12,7 @@
     "chai": "^1.9.1",
     "del": "^1.1.1",
     "exorcist": "^0.1.6",
-    "gulp": "^3.8.7",
+    "gulp": "gulpjs/gulp#4.0",
     "gulp-cached": "^1.0.1",
     "gulp-changed": "^1.0.0",
     "gulp-concat": "^2.4.0",

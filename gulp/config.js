@@ -1,28 +1,14 @@
 'use strict';
 
-var args = require('yargs').argv;
-
-var production = args.prod ? true : false;
-var build = args._.length ? args._[0] === 'build' : false;
-var watch = args._.length ? args._[0] === 'watch' : true;
-var req = build ? ['clean'] : [];
-var dest = watch ? './.tmp' : './dist';
+var dest = './dist';
 
 var config = {
 
-	build : build,
-
-	watch : watch,
-
-	req : req,
-
-	production : production,
-
 	clean: {
-		src: ['./.tmp', './dist']
+		src: './dist'
 	},
 
-	styles: {
+  styles: {
 		watch: './styles/**/*',
 		entry: './styles/index.styl',
 		dist: dest + '/css/'

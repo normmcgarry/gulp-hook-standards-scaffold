@@ -7,7 +7,7 @@ var rename = require('gulp-rename');
 var del = require('del');
 var replace = require('gulp-replace');
 
-gulp.task('version', function() {
+gulp.task('version', function(cb) {
 
   var date = new Date();
   var version;
@@ -47,5 +47,7 @@ gulp.task('version', function() {
     .pipe(replace('<html', '<html data-version="'+ version +'"'))
     .pipe(replace(config.scripts.output, 'main.build.' + version + '.js'))
     .pipe(gulp.dest(config.static.dist));
+
+  cb();
 
 });

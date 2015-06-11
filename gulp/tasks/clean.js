@@ -1,14 +1,12 @@
 'use strict';
 
 var config = require('../config.js');
-
 var gulp = require('gulp');
-var del = require('del');
-var gutil = require('gulp-util');
+var clean = require('gulp-clean');
 
-gulp.task('clean', function (cb) {
+gulp.task( 'clean', function(){
 
-	del.sync(config.clean.src, {force: true});
-	cb();
+  return gulp.src( config.clean.src, { read: false } )
+    .pipe( clean( { force: true } ) );
 
 });
