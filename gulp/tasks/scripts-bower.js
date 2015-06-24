@@ -3,7 +3,7 @@
 var config = require('../config.js');
 var gulp = require('gulp');
 var bower = require('main-bower-files');
-var concat = require('gulp-concat');
+var concatsource = require('gulp-concat-sourcemap');
 
 gulp.task('scripts-bower', function(){
 
@@ -17,7 +17,6 @@ gulp.task('scripts-bower', function(){
   }
 
   return gulp.src(mainBowerFiles)
-    .pipe(concat('bower.js'))
+    .pipe(concatsource('bower.js', {sourcesContent: true}))
     .pipe(gulp.dest(config.scripts.dist));
-
 });
