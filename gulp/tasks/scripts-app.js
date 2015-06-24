@@ -6,7 +6,7 @@ var browserify = require('browserify');
 var source = require('vinyl-source-stream');
 var buffer = require('vinyl-buffer');
 
-gulp.task('scripts-app', function(a){
+gulp.task('scripts-app', function(){
 
   var bundler = browserify(config.scripts.entry, {
     debug: true,
