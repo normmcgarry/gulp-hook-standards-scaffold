@@ -3,11 +3,7 @@
 var config = require('../config.js');
 var gulp = require('gulp');
 var bower = require('main-bower-files');
-var gutil = require('gulp-util');
-var concatsource = require('gulp-concat-sourcemap');
 var concat = require('gulp-concat');
-var streamify = require('gulp-streamify');
-var uglify = require('gulp-uglify');
 
 gulp.task('scripts-bower', function(){
 
@@ -21,10 +17,7 @@ gulp.task('scripts-bower', function(){
   }
 
   return gulp.src(mainBowerFiles)
-    .on('error', function (error) {
-      gutil.log('scripts-bower error: ' + error);
-    })
-    .pipe(concatsource('bower.js', {sourcesContent: true}))
+    .pipe(concat('bower.js'))
     .pipe(gulp.dest(config.scripts.dist));
 
 });

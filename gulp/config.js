@@ -5,11 +5,11 @@ var dest = './dist';
 var config = {
 
 	clean: {
-		src: './dist'
+		src: dest
 	},
 
   styles: {
-		watch: './styles/**/*',
+    src: './styles/**/*',
 		entry: './styles/index.styl',
 		dist: dest + '/css/'
 	},
@@ -39,7 +39,7 @@ var config = {
 	},
 
 	scripts: {
-		watch: './app/**/*.js',
+		src: ['./app/**/*.js' , '!./app/vendor/**/*.js'],
 		entry: './app/index.js',
 		output: 'main.build.js',
 		dist: dest + '/js/',
@@ -47,7 +47,7 @@ var config = {
 	},
 
 	server: {
-		root: './.tmp',
+		root: dest,
 		port: 8080,
 		livereload: true
 	},
