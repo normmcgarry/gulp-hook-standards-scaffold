@@ -2,10 +2,10 @@
 
 var config = require('../config');
 var gulp = require('gulp');
-var concat = require('gulp-concat');
+var concatsource = require('gulp-concat-sourcemap');
 
 gulp.task('scripts-vendor', function(){
   return gulp.src(config.scripts.vendor)
-    .pipe(concat('vendor.js'))
+    .pipe(concatsource('vendor.js', {sourcesContent: true}))
     .pipe(gulp.dest(config.scripts.dist));
 });
