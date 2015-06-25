@@ -1,12 +1,25 @@
+/**
+ * Reloads the browser when using LiveReload
+ * @tasks/reload
+ */
+
 'use strict';
 
-var gulp = require('gulp');
-var config = require('../config');
 var connect = require('gulp-connect');
 
-gulp.task('reload', function(){
+/**
+ * @param gulp - function
+ * @param options - object
+ * options.root : Path to the LiveReload's root
+ * @returns {Function}
+ */
+module.exports = function( gulp, options ) {
 
-  return gulp.src(config.server.root)
-    .pipe(connect.reload());
+  return function(){
 
-})
+    return gulp.src(options.root)
+      .pipe(connect.reload());
+
+  }
+
+}
