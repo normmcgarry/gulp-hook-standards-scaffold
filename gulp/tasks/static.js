@@ -1,11 +1,26 @@
+/**
+ * Copies a specified directory to another location
+ * @tasks/static
+ */
+
 'use strict';
 
-var config = require('../config');
-var gulp = require('gulp');
+var clean = require('gulp-clean');
 
-gulp.task('static', function(){
+/**
+ * @param gulp - function
+ * @param options - object
+ * options.src : Directory to copy.
+ * options.dist : Destination to copy options.src to.
+ * @returns {Function}
+ */
+module.exports = function( gulp, options, flags ) {
 
-  return gulp.src(config.static.src /*, {since: gulp.lastRun('static')}*/ )
-    .pipe(gulp.dest(config.static.dist));
+  return function(){
 
-});
+    return gulp.src(options.src)
+      .pipe(gulp.dest(options.dist));
+
+  }
+
+}
