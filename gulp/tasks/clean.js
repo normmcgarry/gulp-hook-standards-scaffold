@@ -1,12 +1,25 @@
+/**
+ * Deletes specified directory
+ * @tasks/clean
+ */
+
 'use strict';
 
-var config = require('../config.js');
-var gulp = require('gulp');
 var clean = require('gulp-clean');
 
-gulp.task( 'clean', function(){
+/**
+ * @param gulp - function
+ * @param options - object
+ * options.src : Directory to delete.
+ * @returns {Function}
+ */
+module.exports = function( gulp, options, flags ) {
 
-  return gulp.src( config.clean.src, { read: false } )
-    .pipe( clean( { force: true } ) );
+  return function(){
 
-});
+    return gulp.src( options.src, { read: false } )
+      .pipe( clean( { force: true } ) );
+
+  }
+
+}
