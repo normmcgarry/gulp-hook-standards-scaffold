@@ -1,11 +1,27 @@
+/**
+ * Minify PNG, JPEG, GIF and SVG images
+ * @tasks/images
+ */
+
 'use strict';
 
-var config = require('../config');
-var gulp = require('gulp');
 var imagemin = require('gulp-imagemin');
 
-gulp.task('images', function(){
-  return gulp.src(config.images.src /*, {since: gulp.lastRun('images')}*/ )
-    .pipe(imagemin())
-    .pipe(gulp.dest(config.images.dist));
-});
+/**
+ * @param gulp - function
+ * @param options - object
+ * options.src : Directory of images to optimize.
+ * options.dist : Output directory
+ * @returns {Function}
+ */
+module.exports = function( gulp, options, flags ) {
+
+  return function(){
+
+    return gulp.src(options.src)
+      .pipe(imagemin())
+      .pipe(gulp.dest(options.dist));
+
+  }
+
+}
