@@ -1,11 +1,34 @@
+/**
+ * Merges all ( vendor ) javascript files into one js file.
+ * @tasks/scripts-vendor
+ */
+
 'use strict';
 
-var config = require('../config');
-var gulp = require('gulp');
+var concat = require('gulp-concat');
 var concatsource = require('gulp-concat-sourcemap');
+var streamify = require('gulp-streamify');
+var uglify = require('gulp-uglify');
+var gutil = require('gulp-util');
 
-gulp.task('scripts-vendor', function(){
-  return gulp.src(config.scripts.vendor)
-    .pipe(concatsource('vendor.js', {sourcesContent: true}))
-    .pipe(gulp.dest(config.scripts.dist));
-});
+/**
+ * @param gulp - function
+ * @param options - object
+ * options.vendor : Path to the entry js file.
+ * options.dist : Destination directory for file output.
+ * @param flags - object
+ * flags.minify : boolean
+ * flags.sourcemap : boolean
+ * @returns {Function}
+ */
+module.exports = function( gulp, options, flags ) {
+
+  return function(){
+
+    return gulp.src(options.vendor)
+      .pipe(flags.minify ? streamify(uglify()) : gutil.noop())
+      .pipe(flags.sourcemap ? concatsource('vendor.js', {sourcesContent: true}) : concat('vendor.js'))
+      .pipe(gulp.dest(options.dist));
+  }
+
+}

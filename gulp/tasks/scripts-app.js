@@ -5,11 +5,9 @@
 
 'use strict';
 
-var gulp = require('gulp');
 var browserify = require('browserify');
 var source = require('vinyl-source-stream');
 var buffer = require('vinyl-buffer');
-var gutil = require('gulp-util');
 var gulpif = require('gulp-if');
 var streamify = require('gulp-streamify');
 var uglify = require('gulp-uglify');
@@ -19,7 +17,7 @@ var sourcemaps = require('gulp-sourcemaps');
  * @param gulp - function
  * @param options - object
  * options.entry : Path to the entry js file.
- * options.dist : Destination directory for file output
+ * options.dist : Destination directory for file output.
  * @param flags - object
  * flags.minify : boolean
  * flags.sourcemap : boolean

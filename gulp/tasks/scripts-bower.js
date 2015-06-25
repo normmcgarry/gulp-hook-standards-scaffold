@@ -1,22 +1,43 @@
+/**
+ * Merges all ( bower ) javascript files into one js file using bower.
+ * @tasks/scripts-bower
+ */
+
 'use strict';
 
-var config = require('../config.js');
-var gulp = require('gulp');
 var bower = require('main-bower-files');
+var concat = require('gulp-concat');
 var concatsource = require('gulp-concat-sourcemap');
+var streamify = require('gulp-streamify');
+var uglify = require('gulp-uglify');
+var gutil = require('gulp-util');
 
-gulp.task('scripts-bower', function(){
+/**
+ * @param gulp - function
+ * @param options - object
+ * options.dist : Destination directory for file output.
+ * @param flags - object
+ * flags.minify : boolean
+ * flags.sourcemap : boolean
+ * @returns {Function}
+ */
+module.exports = function( gulp, options, flags ) {
 
-  var mainBowerFiles;
+  return function(){
 
-  try {
-    mainBowerFiles = bower({debug: true, paths: '.'});
-  } catch (error) {
-    gutil.log(error.message);
-    return;
+    var mainBowerFiles;
+
+    try {
+      mainBowerFiles = bower({debug: true, paths: '.'});
+    } catch (error) {
+      gutil.log(error.message);
+      return;
+    }
+
+    return gulp.src(mainBowerFiles)
+      .pipe(!flags.minify ? gutil.noop() : streamify(uglify()))
+      .pipe(flags.sourcemap ? concatsource('bower.js', {sourcesContent: true}) : concat('bower.js'))
+      .pipe(gulp.dest(options.dist));
   }
 
-  return gulp.src(mainBowerFiles)
-    .pipe(concatsource('bower.js', {sourcesContent: true}))
-    .pipe(gulp.dest(config.scripts.dist));
-});
+}
