@@ -2,7 +2,7 @@
 
 // vars
 var gulp = require('gulp');
-var connect = require('gulp-connect');
+var bs = require('browser-sync').create();
 var config = require('./config');
 
 // two more states to minify code and create sourcemaps. The default is for local development.
@@ -19,32 +19,41 @@ gulp.task('prod', function(done) {
 });
 
 // define stackable tasks
-gulp.task('styles', require('./tasks/styles')( gulp, config.styles, config.flags ));
 gulp.task('clean', require('./tasks/clean')( gulp, config.clean ));
-gulp.task('images', require('./tasks/images')( gulp, config.images ));
-gulp.task('reload', require('./tasks/reload')( gulp, config.server ));
-gulp.task('scripts-app', require('./tasks/scripts-app')( gulp, config.scripts, config.flags ));
-gulp.task('scripts-bower', require('./tasks/scripts-bower')( gulp, config.scripts, config.flags ));
-gulp.task('scripts-vendor', require('./tasks/scripts-vendor')( gulp, config.scripts, config.flags ));
-gulp.task('static', require('./tasks/static')( gulp, config.static ));
-gulp.task('tests-mocha', require('./tasks/tests-mocha')( gulp, config.tests ));
+gulp.task('images', require('./tasks/images')( gulp, bs, config.images ));
+gulp.task('scripts-app', require('./tasks/scripts-app')( gulp, bs, config.scripts, config.flags ));
+gulp.task('scripts-bower', require('./tasks/scripts-bower')( gulp, bs, config.scripts, config.flags ));
+gulp.task('scripts-vendor', require('./tasks/scripts-vendor')( gulp, bs, config.scripts, config.flags ));
+gulp.task('static', require('./tasks/static')( gulp, bs, config.static ));
+gulp.task('styles', require('./tasks/styles')( gulp, bs, config.styles, config.flags ));
 gulp.task('tests-jshint', require('./tasks/tests-jshint')( gulp, config.tests ));
+gulp.task('tests-mocha', require('./tasks/tests-mocha')( gulp, config.tests ));
 gulp.task('version', require('./tasks/version')( gulp, config.version ));
 
 
 // define watch actions
-gulp.task('watch', function(){
+gulp.task('watch', function(done) {
 
-  gulp.watch(config.scripts.app.src , gulp.series( 'scripts-app', 'reload' ));
-  gulp.watch(config.scripts.bower.src, gulp.series( 'scripts-bower', 'reload' ));
-  gulp.watch(config.scripts.vendor.src , gulp.series( 'scripts-vendor', 'reload' ));
+  bs.init({
+    server: {
+      baseDir: config.server.root
+    },
+    port: config.server.port,
+    ghostMode: {
+      clicks: false,
+      forms: false,
+      scroll: false
+    }
+  });
 
-  gulp.watch(config.styles.src , gulp.series( 'styles', 'reload' ));
-  gulp.watch(config.static.src , gulp.series( 'static', 'reload' ));
+  gulp.watch(config.scripts.app.src , gulp.series( 'scripts-app' ));
+  gulp.watch(config.scripts.bower.src, gulp.series( 'scripts-bower' ));
+  gulp.watch(config.scripts.vendor.src , gulp.series( 'scripts-vendor' ));
 
-  config.server.livereload = true;
-  connect.server(config.server);
-  require('opn')('http://localhost:' + config.server.port);
+  gulp.watch(config.styles.src , gulp.series( 'styles' ));
+  gulp.watch(config.static.src , gulp.series( 'static' ));
+
+  done();
 
 });
 

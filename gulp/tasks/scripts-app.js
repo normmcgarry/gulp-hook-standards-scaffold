@@ -15,6 +15,7 @@ var gutil = require('gulp-util');
 
 /**
  * @param gulp - function
+ * @param bs - Browser sync instance
  * @param options - object
  * options.entry : Path to the entry js file.
  * options.dist : Destination directory for file output.
@@ -23,7 +24,7 @@ var gutil = require('gulp-util');
  * flags.sourcemap : boolean
  * @returns {Function}
  */
-module.exports = function( gulp, options, flags ) {
+module.exports = function( gulp, bs, options, flags ) {
 
   return function() {
 
@@ -39,7 +40,8 @@ module.exports = function( gulp, options, flags ) {
         .pipe(flags.sourcemap ? sourcemaps.init({loadMaps: true}) : gutil.noop())
         .pipe(flags.minify ? streamify(uglify()) : gutil.noop())
         .pipe(flags.sourcemap ? sourcemaps.write('./') : gutil.noop())
-        .pipe(gulp.dest(options.dist));
+        .pipe(gulp.dest(options.dist))
+        .pipe(bs.stream());
     };
 
     bundler.on('update', rebundle);

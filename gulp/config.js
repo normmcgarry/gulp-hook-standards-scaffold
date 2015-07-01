@@ -62,8 +62,7 @@ var config = {
 
   server: {
     root: dest,
-    port: 8080,
-    livereload: true
+    port: 8080
   },
 
   version: {

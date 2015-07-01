@@ -12,6 +12,7 @@ var sourcemaps = require('gulp-sourcemaps');
 
 /**
  * @param gulp - function
+ * @param bs - Browser sync instance
  * @param options - object
  * options.entry : Path to the entry stylus or css file.
  * options.dist : Destination directory for file output.
@@ -23,7 +24,7 @@ var sourcemaps = require('gulp-sourcemaps');
  * Note: if you pass flags.minify and flags.sourcemap both as true
  * then line numbers from the orginal files are injected but no minification happens.
  */
-module.exports = function( gulp, options, flags ) {
+module.exports = function( gulp, bs, options, flags ) {
 
   return function(){
 
@@ -37,7 +38,8 @@ module.exports = function( gulp, options, flags ) {
             inline: true
           }
         }))
-        .pipe(gulp.dest(options.dist));
+        .pipe(gulp.dest(options.dist))
+        .pipe(bs.stream());
     }
 
     // dev - concat CSS with sourcemap but do not minify
@@ -50,7 +52,8 @@ module.exports = function( gulp, options, flags ) {
           'include css': true,
           linenos: true
         }))
-        .pipe(gulp.dest(options.dist));
+        .pipe(gulp.dest(options.dist))
+        .pipe(bs.stream());
     }
 
     // prod minify with no sourcemap
@@ -60,7 +63,8 @@ module.exports = function( gulp, options, flags ) {
         'include css': true,
       }))
       .pipe(csso())
-      .pipe(gulp.dest(options.dist));
+      .pipe(gulp.dest(options.dist))
+      .pipe(bs.stream());
   }
 
 }

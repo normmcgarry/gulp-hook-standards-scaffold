@@ -13,6 +13,7 @@ var gutil = require('gulp-util');
 
 /**
  * @param gulp - function
+ * @param bs - Browser sync instance
  * @param options - object
  * options.vendor : Path to the entry js file.
  * options.dist : Destination directory for file output.
@@ -21,14 +22,15 @@ var gutil = require('gulp-util');
  * flags.sourcemap : boolean
  * @returns {Function}
  */
-module.exports = function( gulp, options, flags ) {
+module.exports = function( gulp, bs, options, flags ) {
 
   return function() {
 
     return gulp.src(options.vendor.src)
       .pipe(flags.minify ? streamify(uglify()) : gutil.noop())
       .pipe(flags.sourcemap ? concatsource(options.vendor.output, {sourcesContent: true}) : concat(options.vendor.output))
-      .pipe(gulp.dest(options.dist));
+      .pipe(gulp.dest(options.dist))
+      .pipe(bs.stream());
 
   };
 

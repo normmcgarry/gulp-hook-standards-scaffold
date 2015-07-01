@@ -14,6 +14,7 @@ var gutil = require('gulp-util');
 
 /**
  * @param gulp - function
+ * @param bs - Browser sync instance
  * @param options - object
  * options.dist : Destination directory for file output.
  * @param flags - object
@@ -21,7 +22,7 @@ var gutil = require('gulp-util');
  * flags.sourcemap : boolean
  * @returns {Function}
  */
-module.exports = function( gulp, options, flags ) {
+module.exports = function( gulp, bs, options, flags ) {
 
   return function() {
 
@@ -37,7 +38,8 @@ module.exports = function( gulp, options, flags ) {
     return gulp.src(mainBowerFiles)
       .pipe(flags.minify ? streamify(uglify()) : gutil.noop())
       .pipe(flags.sourcemap ? concatsource(options.bower.output, {sourcesContent: true}) : options.bower.output)
-      .pipe(gulp.dest(options.dist));
+      .pipe(gulp.dest(options.dist))
+      .pipe(bs.stream());
 
   };
 
