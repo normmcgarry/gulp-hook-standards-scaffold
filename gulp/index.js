@@ -53,6 +53,6 @@ gulp.task('build', gulp.series('clean', gulp.parallel('tests-mocha', 'tests-jshi
 
 gulp.task('build-dev' , gulp.series('dev', 'build', 'watch' ));
 
-gulp.task('build-prod' , gulp.series('prod', 'build', 'watch' ));
+gulp.task('build-prod' , gulp.series('prod', 'build', 'version' , 'watch' ));
 
-gulp.task('default' , gulp.series('build' , 'version' , 'watch'));
+gulp.task('default' , gulp.series('build' , 'watch'));
