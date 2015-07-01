@@ -23,7 +23,7 @@ var gutil = require('gulp-util');
  */
 module.exports = function( gulp, options, flags ) {
 
-  return function(){
+  return function() {
 
     var mainBowerFiles;
 
