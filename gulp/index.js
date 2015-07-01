@@ -35,9 +35,9 @@ gulp.task('version', require('./tasks/version')( gulp, config.version ));
 // define watch actions
 gulp.task('watch', function(){
 
-  gulp.watch(config.scripts.src , gulp.series('scripts-app', 'reload'));
-  gulp.watch(config.scripts.vendor , gulp.series('scripts-vendor', 'reload'));
-  gulp.watch(config.bower + '**/*.js' , gulp.series('scripts-bower', 'reload'));
+  gulp.watch(config.scripts.app.src , gulp.series('scripts-app', 'reload'));
+  gulp.watch(config.scripts.bower.src, gulp.series('scripts-bower', 'reload'));
+  gulp.watch(config.scripts.vendor.src , gulp.series('scripts-vendor', 'reload'));
 
   gulp.watch(config.styles.src , gulp.series( 'styles', 'reload' ));
   gulp.watch(config.static.src , gulp.series( 'static', 'reload' ));

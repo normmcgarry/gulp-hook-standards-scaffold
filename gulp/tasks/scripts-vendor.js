@@ -25,10 +25,11 @@ module.exports = function( gulp, options, flags ) {
 
   return function(){
 
-    return gulp.src(options.vendor)
+    return gulp.src(options.vendor.src)
       .pipe(flags.minify ? streamify(uglify()) : gutil.noop())
-      .pipe(flags.sourcemap ? concatsource('vendor.js', {sourcesContent: true}) : concat('vendor.js'))
+      .pipe(flags.sourcemap ? concatsource(options.vendor.output, {sourcesContent: true}) : concat(options.vendor.output))
       .pipe(gulp.dest(options.dist));
-  }
 
-}
+  };
+
+};

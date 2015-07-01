@@ -9,57 +9,66 @@ var config = {
     sourcemap: true
   },
 
-	clean: {
-		src: dest
-	},
+  clean: {
+    src: dest
+  },
 
   styles: {
     src: './styles/**/*',
-		entry: './styles/index.styl',
-		dist: dest + '/css/'
-	},
+    entry: './styles/index.styl',
+    dist: dest + '/css/'
+  },
 
-	static: {
-		src: ['./static/**/*'],
-		dist: dest
-	},
+  static: {
+    src: ['./static/**/*'],
+    dist: dest
+  },
 
-	images: {
-		src: ['./static/images/**/*.{gif,jpg,png,svg}'],
-		dist: dest + '/images/'
-	},
+  images: {
+    src: ['./static/images/**/*.{gif,jpg,png,svg}'],
+    dist: dest + '/images/'
+  },
 
-	tests: {
-		src: ['./tests/**/*.js'],
-		mocha: {
-			config: {
-				ui: 'tdd',
-				reporter:'spec'
-			}
-		}
-	},
+  tests: {
+    src: ['./tests/**/*.js'],
+    mocha: {
+      config: {
+        ui: 'tdd',
+        reporter: 'spec'
+      }
+    }
+  },
 
-	lint: {
-		src: ['./app/**/*.js', '!app/vendor/**/*.js', './tests/**/*.js']
-	},
+  lint: {
+    src: ['./app/**/*.js', '!app/vendor/**/*.js', './tests/**/*.js']
+  },
 
-	scripts: {
-		src: ['./app/**/*.js' , '!./app/vendor/**/*.js'],
-		entry: './app/index.js',
-		output: 'main.build.js',
-		dist: dest + '/js/',
-		vendor: './app/vendor/**/*.js'
-	},
+  scripts: {
+    app: {
+      src: ['./app/**/*.js', '!./app/vendor/**/*.js'],
+      entry: './app/index.js',
+      output: 'main.build.js'
+    },
+    bower: {
+      src: './bower.json',
+      output: 'bower.js'
+    },
+    vendor: {
+      src: './app/vendor/**/*.js',
+      output: 'vendor.js'
+    },
+    dist: dest + '/js/'
+  },
 
-	server: {
-		root: dest,
-		port: 8080,
-		livereload: true
-	},
+  server: {
+    root: dest,
+    port: 8080,
+    livereload: true
+  },
 
   version: {
     css: dest + '/css/*.css',
-    cssDist : dest + '/css/',
+    cssDist: dest + '/css/',
 
     html: dest + '/*.html',
     htmlDist: dest + '/',
@@ -71,7 +80,7 @@ var config = {
     jsMapDist: dest + '/js/',
   },
 
-	bower: './bower_components/'
+  bower: './bower_components/'
 
 };
 

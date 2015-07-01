@@ -8,10 +8,10 @@
 var browserify = require('browserify');
 var source = require('vinyl-source-stream');
 var buffer = require('vinyl-buffer');
-var gulpif = require('gulp-if');
 var streamify = require('gulp-streamify');
 var uglify = require('gulp-uglify');
 var sourcemaps = require('gulp-sourcemaps');
+var gutil = require('gulp-util');
 
 /**
  * @param gulp - function
@@ -25,20 +25,20 @@ var sourcemaps = require('gulp-sourcemaps');
  */
 module.exports = function( gulp, options, flags ) {
 
-  return function(){
+  return function() {
 
-    var bundler = browserify(options.entry, {
+    var bundler = browserify(options.app.entry, {
       debug: flags.sourcemap,
       cache: {}
     });
 
     var rebundle = function() {
       return bundler.bundle()
-        .pipe(source(options.output))
-        .pipe(gulpif(flags.sourcemap, buffer()))
-        .pipe(gulpif(flags.sourcemap, sourcemaps.init({loadMaps: true})))
-        .pipe(gulpif(flags.minify, streamify(uglify())))
-        .pipe(gulpif(flags.sourcemap, sourcemaps.write('./')))
+        .pipe(source(options.app.output))
+        .pipe(flags.sourcemap ? buffer() : gutil.noop())
+        .pipe(flags.sourcemap ? sourcemaps.init({loadMaps: true}) : gutil.noop())
+        .pipe(flags.minify ? streamify(uglify()) : gutil.noop())
+        .pipe(flags.sourcemap ? sourcemaps.write('./') : gutil.noop())
         .pipe(gulp.dest(options.dist));
     };
 
@@ -46,6 +46,6 @@ module.exports = function( gulp, options, flags ) {
 
     return rebundle();
 
-  }
+  };
 
-}
+};
