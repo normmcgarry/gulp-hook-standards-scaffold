@@ -6,16 +6,16 @@ var connect = require('gulp-connect');
 var config = require('./config');
 
 // two more states to minify code and create sourcemaps. The default is for local development.
-gulp.task('dev', function () {
+gulp.task('dev', function(done) {
   config.flags.minify = true;
   config.flags.sourcemap = true;
-  return gulp.src('.')
+  done();
 });
 
-gulp.task('prod', function () {
+gulp.task('prod', function(done) {
   config.flags.minify = true;
   config.flags.sourcemap = false;
-  return gulp.src('.')
+  done();
 });
 
 // define stackable tasks
@@ -35,9 +35,9 @@ gulp.task('version', require('./tasks/version')( gulp, config.version ));
 // define watch actions
 gulp.task('watch', function(){
 
-  gulp.watch(config.scripts.app.src , gulp.series('scripts-app', 'reload'));
-  gulp.watch(config.scripts.bower.src, gulp.series('scripts-bower', 'reload'));
-  gulp.watch(config.scripts.vendor.src , gulp.series('scripts-vendor', 'reload'));
+  gulp.watch(config.scripts.app.src , gulp.series( 'scripts-app', 'reload' ));
+  gulp.watch(config.scripts.bower.src, gulp.series( 'scripts-bower', 'reload' ));
+  gulp.watch(config.scripts.vendor.src , gulp.series( 'scripts-vendor', 'reload' ));
 
   gulp.watch(config.styles.src , gulp.series( 'styles', 'reload' ));
   gulp.watch(config.static.src , gulp.series( 'static', 'reload' ));
@@ -49,10 +49,10 @@ gulp.task('watch', function(){
 });
 
 // define user commands
-gulp.task('build', gulp.series('clean', gulp.parallel('tests-mocha', 'tests-jshint'), gulp.parallel('static', 'scripts-app', 'scripts-vendor', 'scripts-bower', 'styles' )));
+gulp.task('build', gulp.series( 'clean', gulp.parallel( 'tests-mocha', 'tests-jshint' ), gulp.parallel( 'static', 'scripts-app', 'scripts-vendor', 'scripts-bower', 'styles' ) ));
 
-gulp.task('build-dev' , gulp.series('dev', 'build', 'watch' ));
+gulp.task('build-dev' , gulp.series( 'dev', 'build', 'watch' ));
 
-gulp.task('build-prod' , gulp.series('prod', 'build', 'version' , 'watch' ));
+gulp.task('build-prod' , gulp.series( 'prod', 'build', 'version' , 'watch' ));
 
-gulp.task('default' , gulp.series('build' , 'watch'));
+gulp.task('default' , gulp.series( 'build' , 'watch' ));
