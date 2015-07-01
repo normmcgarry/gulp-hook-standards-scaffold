@@ -14,7 +14,7 @@ var clean = require('gulp-clean');
  * options.dist : Destination to copy options.src to.
  * @returns {Function}
  */
-module.exports = function( gulp, options, flags ) {
+module.exports = function( gulp, options ) {
 
   return function(){
 

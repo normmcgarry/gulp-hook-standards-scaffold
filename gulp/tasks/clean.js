@@ -13,7 +13,7 @@ var clean = require('gulp-clean');
  * options.src : Directory to delete.
  * @returns {Function}
  */
-module.exports = function( gulp, options, flags ) {
+module.exports = function( gulp, options ) {
 
   return function(){
 

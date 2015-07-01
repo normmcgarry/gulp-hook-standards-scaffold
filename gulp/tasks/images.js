@@ -14,7 +14,7 @@ var imagemin = require('gulp-imagemin');
  * options.dist : Output directory.
  * @returns {Function}
  */
-module.exports = function( gulp, options, flags ) {
+module.exports = function( gulp, options ) {
 
   return function(){
 
