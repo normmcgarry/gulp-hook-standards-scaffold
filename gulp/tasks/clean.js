@@ -5,7 +5,7 @@
 
 'use strict';
 
-var clean = require('gulp-clean');
+var del = require('del');
 
 /**
  * @param gulp - function
@@ -15,10 +15,10 @@ var clean = require('gulp-clean');
  */
 module.exports = function( gulp, options, flags ) {
 
-  return function(){
+  return function(done) {
 
-    return gulp.src( options.src, { read: false } )
-      .pipe( clean( { force: true } ) );
+    del.sync(options.src, {force: true});
+    done();
 
   }
 
