@@ -1,5 +1,5 @@
 /**
- * Reloads the browser when using LiveReload
+ * Reloads the browser when using LiveReload.
  * @tasks/reload
  */
 

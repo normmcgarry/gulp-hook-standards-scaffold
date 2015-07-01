@@ -1,5 +1,5 @@
 /**
- * Deletes specified directory
+ * Deletes specified directory.
  * @tasks/clean
  */
 

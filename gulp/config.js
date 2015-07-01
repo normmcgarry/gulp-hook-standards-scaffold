@@ -4,6 +4,11 @@ var dest = './dist';
 
 var config = {
 
+  flags: {
+    minify: false,
+    sourcemap: true
+  },
+
 	clean: {
 		src: dest
 	},
@@ -51,6 +56,20 @@ var config = {
 		port: 8080,
 		livereload: true
 	},
+
+  version: {
+    css: dest + '/css/*.css',
+    cssDist : dest + '/css/',
+
+    html: dest + '/*.html',
+    htmlDist: dest + '/',
+
+    js: dest + '/js/*.js',
+    jsDist: dest + '/js/',
+
+    jsMap: dest + '/js/*.map',
+    jsMapDist: dest + '/js/',
+  },
 
 	bower: './bower_components/'
 

@@ -1,5 +1,5 @@
 /**
- * Copies a specified directory to another location
+ * Copies a specified directory to another location.
  * @tasks/static
  */
 

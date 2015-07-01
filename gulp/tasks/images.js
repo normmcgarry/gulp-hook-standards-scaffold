@@ -1,5 +1,5 @@
 /**
- * Minify PNG, JPEG, GIF and SVG images
+ * Minify PNG, JPEG, GIF and SVG images.
  * @tasks/images
  */
 
@@ -11,7 +11,7 @@ var imagemin = require('gulp-imagemin');
  * @param gulp - function
  * @param options - object
  * options.src : Directory of images to optimize.
- * options.dist : Output directory
+ * options.dist : Output directory.
  * @returns {Function}
  */
 module.exports = function( gulp, options, flags ) {
