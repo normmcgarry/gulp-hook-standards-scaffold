@@ -28,7 +28,7 @@ module.exports = function( gulp, bs, options, flags ) {
 
     return gulp.src(options.vendor.src)
       .pipe(flags.minify ? streamify(uglify()) : gutil.noop())
-      .pipe(flags.sourcemap ? concatsource(options.vendor.output, {sourcesContent: true}) : concat(options.vendor.output))
+      .pipe(flags.sourcemap ? concatsource('vendor.js', {sourcesContent: true}) : concat('vendor.js'))
       .pipe(gulp.dest(options.dist))
       .pipe(bs.stream());
 

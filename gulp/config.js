@@ -50,12 +50,10 @@ var config = {
       output: 'main.build.js'
     },
     bower: {
-      src: './bower.json',
-      output: 'bower.js'
+      src: './bower.json'
     },
     vendor: {
-      src: './app/vendor/**/*.js',
-      output: 'vendor.js'
+      src: './app/vendor/**/*.js'
     },
     dist: dest + '/js/'
   },

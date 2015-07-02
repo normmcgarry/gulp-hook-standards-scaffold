@@ -37,7 +37,7 @@ module.exports = function( gulp, bs, options, flags ) {
 
     return gulp.src(mainBowerFiles)
       .pipe(flags.minify ? streamify(uglify()) : gutil.noop())
-      .pipe(flags.sourcemap ? concatsource(options.bower.output, {sourcesContent: true}) : options.bower.output)
+      .pipe(flags.sourcemap ? concatsource('bower.js', {sourcesContent: true}) : 'bower.js')
       .pipe(gulp.dest(options.dist))
       .pipe(bs.stream());
 
