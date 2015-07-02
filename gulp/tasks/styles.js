@@ -8,7 +8,7 @@
 var stylus = require( 'gulp-stylus' );
 var nib = require( 'nib' );
 var csso = require('gulp-csso');
-var sourcemaps = require('gulp-sourcemaps');
+var gutil = require('gulp-util');
 
 /**
  * @param gulp - function
@@ -26,46 +26,56 @@ var sourcemaps = require('gulp-sourcemaps');
  */
 module.exports = function( gulp, bs, options, flags ) {
 
-  return function(){
+  return function() {
 
-    // local
-    if( flags.sourcemap === true && flags.minify === false ){
-      return gulp.src( options.entry )
-        .pipe(stylus({
+    var settings;
+
+    if ( flags.sourcemap === true ) {
+
+      if ( flags.minify === true ) {
+
+        // dev - concat CSS with sourcemap but do not minify
+        // as doing so breaks the sourcemaps
+        // a work around is to include line numbers back to the styl files
+
+        settings = {
+          'use': [nib()],
+          'include css': true,
+          linenos: true
+        };
+
+      } else {
+
+        // local
+
+        settings = {
           'use': [nib()],
           'include css': true,
           sourcemap: {
             inline: true
           }
-        }))
-        .pipe(gulp.dest(options.dist))
-        .pipe(bs.stream());
-    }
+        };
 
-    // dev - concat CSS with sourcemap but do not minify
-    // as doing so breaks the sourcemaps
-    // a work around is to include line numbers back to the styl files
-    if( flags.sourcemap === true && flags.minify === true ){
-      return gulp.src( options.entry )
-        .pipe(stylus({
-          'use': [nib()],
-          'include css': true,
-          linenos: true
-        }))
-        .pipe(gulp.dest(options.dist))
-        .pipe(bs.stream());
-    }
+      }
 
-    // prod minify with no sourcemap
-    return gulp.src( options.entry )
-      .pipe(stylus({
+    } else {
+
+      // prod minify with no sourcemap
+
+      settings = {
         'use': [nib()],
-        'include css': true,
-      }))
-      .pipe(csso())
+        'include css': true
+      };
+
+    }
+
+    return gulp.src( options.entry )
+      .pipe(stylus(settings))
+      .pipe(flags.sourcemap ? gutil.noop() : csso())
       .pipe(gulp.dest(options.dist))
       .pipe(bs.stream());
-  }
 
-}
+  };
+
+};
 
