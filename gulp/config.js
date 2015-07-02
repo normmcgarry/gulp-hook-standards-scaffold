@@ -46,8 +46,7 @@ var config = {
   scripts: {
     app: {
       src: ['./app/**/*.js', '!./app/vendor/**/*.js'],
-      entry: './app/index.js',
-      output: 'main.build.js'
+      entry: './app/index.js'
     },
     bower: {
       src: './bower.json'
