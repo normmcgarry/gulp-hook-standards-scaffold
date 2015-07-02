@@ -30,7 +30,6 @@ gulp.task('tests-jshint', require('./tasks/tests-jshint')( gulp, config.tests ))
 gulp.task('tests-mocha', require('./tasks/tests-mocha')( gulp, config.tests ));
 gulp.task('version', require('./tasks/version')( gulp, config.version ));
 
-
 // define watch actions
 gulp.task('watch', function(done) {
 

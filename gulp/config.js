@@ -74,7 +74,7 @@ var config = {
     jsDist: dest + '/js/',
 
     jsMap: dest + '/js/*.map',
-    jsMapDist: dest + '/js/',
+    jsMapDist: dest + '/js/'
   },
 
   bower: './bower_components/'

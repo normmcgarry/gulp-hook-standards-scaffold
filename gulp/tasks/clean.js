@@ -20,6 +20,6 @@ module.exports = function( gulp, options ) {
     del.sync(options.src, {force: true});
     done();
 
-  }
+  };
 
-}
+};

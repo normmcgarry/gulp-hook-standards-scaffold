@@ -5,8 +5,6 @@
 
 'use strict';
 
-var clean = require('gulp-clean');
-
 /**
  * @param gulp - function
  * @param bs - Browser sync instance
@@ -23,6 +21,6 @@ module.exports = function( gulp, bs, options ) {
       .pipe(gulp.dest(options.dist))
       .pipe(bs.stream());
 
-  }
+  };
 
-}
+};
