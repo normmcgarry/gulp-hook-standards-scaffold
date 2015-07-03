@@ -39,7 +39,7 @@ module.exports = function( gulp, bs, options, flags ) {
         // a work around is to include line numbers back to the styl files
 
         settings = {
-          'use': [nib()],
+          use: [nib()],
           'include css': true,
           linenos: true
         };
@@ -49,7 +49,7 @@ module.exports = function( gulp, bs, options, flags ) {
         // local
 
         settings = {
-          'use': [nib()],
+          use: [nib()],
           'include css': true,
           sourcemap: {
             inline: true
@@ -63,7 +63,7 @@ module.exports = function( gulp, bs, options, flags ) {
       // prod minify with no sourcemap
 
       settings = {
-        'use': [nib()],
+        use: [nib()],
         'include css': true
       };
 

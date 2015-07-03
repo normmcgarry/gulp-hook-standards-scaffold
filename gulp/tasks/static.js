@@ -15,7 +15,7 @@
  */
 module.exports = function( gulp, bs, options ) {
 
-  return function(){
+  return function() {
 
     return gulp.src(options.src)
       .pipe(gulp.dest(options.dist))

@@ -1,11 +1,11 @@
 /**
- * Runs mocha tests.
- * @tasks/test-mocha
+ * Runs jscs tests.
+ * @tasks/test-jscs
  */
 
 'use strict';
 
-var mocha = require('gulp-mocha');
+var jscs = require('gulp-jscs');
 
 /**
  * @param gulp - function
@@ -19,7 +19,7 @@ module.exports = function( gulp, options ) {
   return function() {
 
     return gulp.src( options.src )
-      .pipe(mocha( options.config ));
+      .pipe(jscs());
 
   };
 

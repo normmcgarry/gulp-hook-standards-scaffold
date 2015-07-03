@@ -58,7 +58,7 @@ module.exports = function( gulp, options ) {
       .pipe(inject.append('<!-- Version: ' + version + ' -->\n'))
       .pipe(inject.append('<!-- Created: ' + date + ' -->'))
       .pipe(replace('index.css', 'index.' + version + '.css'))
-      .pipe(replace('<html', '<html data-version="'+ version +'"'))
+      .pipe(replace('<html', '<html data-version="' + version + '"'))
       .pipe(replace('main.build.js', 'main.build.' + version + '.js'))
       .pipe(replace('bower.js', 'bower.' + version + '.js'))
       .pipe(replace('vendor.js', 'vendor.' + version + '.js'))
@@ -71,10 +71,10 @@ module.exports = function( gulp, options ) {
     var date = new Date();
     var version;
 
-    if( !args.version ){
+    if ( !args.version ) {
       version = date.getTime();
     } else {
-      version = args.version.toString().replace( /[^\w.-]+/g ,"");
+      version = args.version.toString().replace( /[^\w.-]+/g, '' );
     }
 
     return merge(
@@ -86,5 +86,3 @@ module.exports = function( gulp, options ) {
   };
 
 };
-
-

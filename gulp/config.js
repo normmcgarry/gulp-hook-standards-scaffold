@@ -30,17 +30,16 @@ var config = {
   },
 
   tests: {
-    src: ['./tests/**/*.js'],
+    lint: {
+      src: ['./app/**/*.js', '!app/vendor/**/*.js', './gulp/**/*.js', './tests/**/*.js']
+    },
     mocha: {
+      src: ['./tests/**/*.js'],
       config: {
         ui: 'tdd',
         reporter: 'spec'
       }
     }
-  },
-
-  lint: {
-    src: ['./app/**/*.js', '!app/vendor/**/*.js', './tests/**/*.js']
   },
 
   scripts: {

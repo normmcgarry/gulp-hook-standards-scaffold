@@ -4,8 +4,8 @@
   "license": "UNLICENSED",
   "private": true,
   "repository": {
-    "type" : "git",
-    "url" : "https://github.com/hookerz/gulp-hook-standards-scaffold.git"
+    "type": "git",
+    "url": "https://github.com/hookerz/gulp-hook-standards-scaffold.git"
   },
   "dependencies": {
     "gulp-cli": "git://github.com/gulpjs/gulp-cli#4.0"
@@ -29,7 +29,7 @@
     "gulp-csso": "~0.2.9",
     "gulp-imagemin": "~1.2.1",
     "gulp-inject-string": "0.0.2",
-    "gulp-jscs": "~1.4.0",
+    "gulp-jscs": "^1.6.0",
     "gulp-jshint": "^1.8.4",
     "gulp-mocha": "^1.0.0",
     "gulp-rename": "^1.2.2",

@@ -17,13 +17,13 @@ var jshintStylish = require('jshint-stylish');
  */
 module.exports = function( gulp, options ) {
 
-  return function(){
+  return function() {
 
     return gulp.src( options.src )
-      .pipe( cache('lint' ) )
-      .pipe( jshint('.jshintrc' ) )
-      .pipe( jshint.reporter( jshintStylish ) );
+      .pipe(cache( 'lint' ))
+      .pipe(jshint( '.jshintrc' ))
+      .pipe(jshint.reporter( jshintStylish ));
 
-  }
+  };
 
-}
+};
