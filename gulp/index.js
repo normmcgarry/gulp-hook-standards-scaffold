@@ -67,7 +67,7 @@ gulp.task('build-dev', gulp.series( 'dev', 'build' ));
 
 gulp.task('build-prod', gulp.series( 'prod', 'build', 'version' ));
 
-gulp.task('watch-dev', gulp.series( 'build-dev', 'watch' ));
+gulp.task('watch-dev', gulp.series(  'dev', 'build', 'watch' ));
 
 gulp.task('watch-prod', gulp.series( 'prod', 'build', 'watch' ));
 
