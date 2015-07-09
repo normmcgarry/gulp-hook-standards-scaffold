@@ -47,9 +47,6 @@ var config = {
       src: ['./app/**/*.js', '!./app/vendor/**/*.js'],
       entry: './app/index.js'
     },
-    bower: {
-      src: './bower.json'
-    },
     vendor: {
       src: './app/vendor/**/*.js'
     },
