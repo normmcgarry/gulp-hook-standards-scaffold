@@ -1,10 +1,6 @@
 'use strict';
 
 var config = require('./config');
-var Greeter = require('./Greeter');
+var Math = require('math');
 
-var g = new Greeter();
-
-console.log(g);
-
-console.log(g.getGreeting());
+console.log(config, Math.PI);

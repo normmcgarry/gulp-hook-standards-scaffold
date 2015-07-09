@@ -30,16 +30,16 @@ command `gulp taskname`. The following tasks will probably be called most often:
 ### default *(watch-dev)*
 The default task, which can be called with just `gulp`. Dev build + local server.
 
-### watch-dev *(build-dev, watch)*
+### watch-dev *(dev, build, watch)*
 Dev build + local server.
 
-### watch-prod *(build-prod, watch)*
+### watch-prod *(prod, build, watch)*
 Prod build + local server.
 
 ### build-dev *(dev, build)*
 Set dev flags and build.
 
-### build-prod *(prod, build)*
+### build-prod *(prod, build, version)*
 Set prod flags and build.
   
 ### build *(clean, tests, static, scripts, styles, images)*

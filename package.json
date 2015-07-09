@@ -57,7 +57,7 @@
     "node": ">=0.10.0"
   },
   "browserify-shim": {
-    "jquery": "global:$"
+    "math": "global:Math"
   },
   "browserify": {
     "transform": [
