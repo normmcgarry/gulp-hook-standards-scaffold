@@ -18,8 +18,15 @@ module.exports = function( gulp, options ) {
 
   return function() {
 
-    return gulp.src( options.src )
+    var stream = gulp.src( options.src )
       .pipe(jscs());
+
+    stream.on('error', function(error) {
+
+      console.log(error.message);
+    });
+
+    return stream;
 
   };
 
