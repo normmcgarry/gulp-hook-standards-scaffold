@@ -95,5 +95,7 @@
   "disallowTrailingWhitespace": true,
   "validateIndentation": 2,
 
-  "requireSemicolons": true
+  "requireSemicolons": true,
+
+  "esnext": true
 }
