@@ -33,6 +33,9 @@ var config = {
     lint: {
       src: ['./app/**/*.js', '!app/vendor/**/*.js', './gulp/**/*.js', './tests/**/*.js']
     },
+    eslint: {
+      src: ['./app/**/*.js']
+    },
     mocha: {
       src: ['./tests/**/*.js'],
       config: {

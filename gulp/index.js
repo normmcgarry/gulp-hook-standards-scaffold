@@ -27,6 +27,7 @@ gulp.task('static', require('./tasks/static')( gulp, bs, config.static ));
 gulp.task('styles', require('./tasks/styles')( gulp, bs, config.styles, config.flags ));
 gulp.task('tests-jscs', require('./tasks/tests-jscs')( gulp, config.tests.lint ));
 gulp.task('tests-jshint', require('./tasks/tests-jshint')( gulp, config.tests.lint ));
+gulp.task('tests-eslint', require('./tasks/tests-eslint')( gulp, config.tests.eslint ));
 gulp.task('tests-mocha', require('./tasks/tests-mocha')( gulp, config.tests.mocha ));
 gulp.task('version', require('./tasks/version')( gulp, config.version ));
 
