@@ -4,6 +4,6 @@ var config = require('./config');
 
 console.log(config);
 
-let square = y => x * x;
+let square = x => x * x;
 
 console.log(square(5));
