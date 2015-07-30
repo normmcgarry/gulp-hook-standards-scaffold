@@ -75,6 +75,10 @@ var config = {
     jsMapDist: dest + '/js/'
   },
 
+  bump: {
+    src: './package.json'
+  },
+
   bower: './bower_components/'
 
 };

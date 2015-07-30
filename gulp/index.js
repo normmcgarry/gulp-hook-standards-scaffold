@@ -29,6 +29,7 @@ gulp.task('tests-jscs', require('./tasks/tests-jscs')( gulp, config.tests.lint )
 gulp.task('tests-eslint', require('./tasks/tests-eslint')( gulp, config.tests.lint ));
 gulp.task('tests-mocha', require('./tasks/tests-mocha')( gulp, config.tests.mocha ));
 gulp.task('version', require('./tasks/version')( gulp, config.version ));
+gulp.task('bump', require('./tasks/bump')( gulp, config.bump ));
 
 gulp.task('scripts', gulp.parallel( 'scripts-app', 'scripts-vendor' ));
 gulp.task('tests', gulp.parallel( 'tests-jscs', 'tests-eslint', 'tests-mocha' ));
