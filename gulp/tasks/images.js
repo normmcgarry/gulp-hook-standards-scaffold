@@ -6,6 +6,8 @@
 'use strict';
 
 var imagemin = require('gulp-imagemin');
+var gifsicle = require('imagemin-gifsicle');
+var jpegtran = require('imagemin-jpegtran');
 var pngquant = require('imagemin-pngquant');
 
 /**
@@ -24,7 +26,11 @@ module.exports = function( gulp, bs, options ) {
       .pipe(imagemin({
         progressive: true,
         svgoPlugins: [{removeViewBox: false}],
-        use: [pngquant()]
+        use: [
+          gifsicle({interlaced: true}),
+          jpegtran({progressive: true}),
+          pngquant()
+        ]
       }))
       .pipe(gulp.dest( options.dist ))
       .pipe(bs.stream());
