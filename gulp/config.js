@@ -1,5 +1,8 @@
 'use strict';
 
+//passed to mocha config
+var babel = require('babel/register');
+
 var dest = './dist';
 
 var config = {
@@ -37,7 +40,10 @@ var config = {
       src: ['./tests/**/*.js'],
       config: {
         ui: 'tdd',
-        reporter: 'spec'
+        reporter: 'spec',
+        compilers: {
+          js: babel
+        }
       }
     }
   },
