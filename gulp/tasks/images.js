@@ -6,6 +6,7 @@
 'use strict';
 
 var imagemin = require('gulp-imagemin');
+var pngquant = require('imagemin-pngquant');
 
 /**
  * @param gulp - function
@@ -20,7 +21,11 @@ module.exports = function( gulp, bs, options ) {
   return function() {
 
     return gulp.src( options.src )
-      .pipe(imagemin())
+      .pipe(imagemin({
+        progressive: true,
+        svgoPlugins: [{removeViewBox: false}],
+        use: [pngquant()]
+      }))
       .pipe(gulp.dest( options.dist ))
       .pipe(bs.stream());
 
