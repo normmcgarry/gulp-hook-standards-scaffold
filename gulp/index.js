@@ -52,11 +52,16 @@ gulp.task('watch', function(done) {
 gulp.task('build', gulp.series( 'clean', 'tests', gulp.parallel( 'static', 'scripts', 'styles', 'images' ) ));
 
 gulp.task('build-dev', gulp.series( 'dev', 'build' ));
+gulp.task('build:dev', gulp.series( 'dev', 'build' ));
 
-gulp.task('build-prod', gulp.series( 'prod', 'build', 'version' ));
+gulp.task('build-prod', gulp.series( 'prod', 'build', 'version'));
+gulp.task('build:prod', gulp.series( 'prod', 'build', 'version'));
 
-gulp.task('watch-dev', gulp.series(  'dev', 'build', 'watch' ));
+gulp.task('watch-dev', gulp.series(  'dev', 'build', 'serve', 'watch'));
+gulp.task('watch:dev', gulp.series(  'dev', 'build', 'serve', 'watch'));
 
-gulp.task('watch-prod', gulp.series( 'prod', 'build', 'watch' ));
+gulp.task('watch-prod', gulp.series( 'prod', 'build', 'serve', 'watch'));
+gulp.task('watch:prod', gulp.series( 'prod', 'build', 'serve', 'watch'));
+
 
 gulp.task('default', gulp.series( 'watch-dev' ));
