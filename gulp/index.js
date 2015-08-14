@@ -29,24 +29,13 @@ gulp.task('tests-jscs', require('./tasks/tests-jscs')( gulp, config.tests.lint )
 gulp.task('tests-jshint', require('./tasks/tests-jshint')( gulp, config.tests.lint ));
 gulp.task('tests-mocha', require('./tasks/tests-mocha')( gulp, config.tests.mocha ));
 gulp.task('version', require('./tasks/version')( gulp, config.version ));
+gulp.task('serve', require('./tasks/serve')(gulp, bs, config));
 
 gulp.task('scripts', gulp.parallel( 'scripts-app', 'scripts-vendor' ));
 gulp.task('tests', gulp.parallel( 'tests-jscs', 'tests-jshint', 'tests-mocha' ));
 
 // define watch actions
 gulp.task('watch', function(done) {
-
-  bs.init({
-    server: {
-      baseDir: config.server.root
-    },
-    port: config.server.port,
-    ghostMode: {
-      clicks: false,
-      forms: false,
-      scroll: false
-    }
-  });
 
   gulp.watch(config.scripts.app.src, gulp.series( 'tests', 'scripts-app' ));
   gulp.watch(config.scripts.vendor.src, gulp.series( 'tests', 'scripts-vendor' ));
