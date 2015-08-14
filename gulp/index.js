@@ -30,6 +30,7 @@ gulp.task('tests-jshint', require('./tasks/tests-jshint')( gulp, config.tests.li
 gulp.task('tests-mocha', require('./tasks/tests-mocha')( gulp, config.tests.mocha ));
 gulp.task('version', require('./tasks/version')( gulp, config.version ));
 gulp.task('serve', require('./tasks/serve')(gulp, bs, config));
+gulp.task('electron', require('./tasks/electron')());
 
 gulp.task('scripts', gulp.parallel( 'scripts-app', 'scripts-vendor' ));
 gulp.task('tests', gulp.parallel( 'tests-jscs', 'tests-jshint', 'tests-mocha' ));
@@ -63,5 +64,7 @@ gulp.task('watch:dev', gulp.series(  'dev', 'build', 'serve', 'watch'));
 gulp.task('watch-prod', gulp.series( 'prod', 'build', 'serve', 'watch'));
 gulp.task('watch:prod', gulp.series( 'prod', 'build', 'serve', 'watch'));
 
+gulp.task('electron-dev', gulp.series( 'dev', 'build', 'watch', 'electron'));
+gulp.task('electron:dev', gulp.series( 'dev', 'build', 'watch', 'electron'));
 
 gulp.task('default', gulp.series( 'watch-dev' ));

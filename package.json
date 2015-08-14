@@ -21,6 +21,7 @@
     "chai": "^1.9.1",
     "del": "^1.1.1",
     "exorcist": "^0.1.6",
+    "electron-prebuilt": "^0.30.2",
     "gulp": "git://github.com/gulpjs/gulp.git#4.0",
     "gulp-cached": "^1.0.1",
     "gulp-concat": "^2.4.0",
