@@ -71,3 +71,5 @@ gulp.task('watch-dev', gulp.series(  'dev', 'build', 'watch' ));
 gulp.task('watch-prod', gulp.series( 'prod', 'build', 'watch' ));
 
 gulp.task('default', gulp.series( 'watch-dev' ));
+
+module.exports = gulp;
